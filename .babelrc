@@ -1,0 +1,10 @@
+{
+  "presets": [
+    "node5",
+    "stage-3"
+
+  ],
+  "plugins": [
+    "transform-runtime"
+  ]
+}

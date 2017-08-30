@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>玩家充值</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./order.css">
+</head>
+
+<body>
+<nav class="navbar  navbar-inverse bg-inverse ">
+  <span class="navbar-text" style="color:white;" id="txt_top">
+    欢迎！
+  </span>
+</nav>
+    <div class="container w-75 p-3" id="all">
+        <div class="form-group row">
+            <label for="example-number-input" class="col-4 col-form-label">玩家ID</label>
+            <div class="col-8">
+                <input class="form-control" type="number" id="playerid" placeholder="玩家ID" required autofocus>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center">
+             <span class="" id="txt_name">  </span>
+        </div>
+        <div class="list-group p-2">
+            <p class="list-group-item active" id="item1">15元 5钻石</p>
+            <p class="list-group-item" id="item2">30元 10钻石</p>
+            <p class="list-group-item" id="item3">150元 50钻石</p>
+        </div>
+        <div class="p-2">
+            <button type="button" class="btn btn-primary btn-lg w-100 btn-block" id="charge">充 值</button>
+        </div>
+        <div class="alert" role="alert" id="alert">
+        </div>
+    </div>
+    <script type="text/javascript" src="./dyh.js"></script>
+</body>
+
+</html>

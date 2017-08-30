@@ -1,0 +1,18 @@
+{
+  "parser"  : "babel-eslint",
+  "extends" : [
+    "standard"
+  ],
+  "env"     : {
+    "browser" : false,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "ENV": true
+  },
+  "rules": {
+    "arrow-parens": 0,
+    "allowEmptyReject": true
+  }
+}

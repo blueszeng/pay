@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>玩家充值</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script type="text/javascript"  src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar  navbar-inverse bg-inverse ">
+        <span class="navbar-text" style="color:white;" id="txt_top">
+    欢迎！
+  </span>
+    </nav>
+    <div class="container w-80 p-3" id="all">
+        <div class="list-group p-2">
+            <div class="form-group row">
+                <label for="example-number-input" class="col-4 col-form-label">玩家ID</label>
+                <div class="col-8">
+                    <input class="form-control" type="number" id="playerid" placeholder="玩家ID" required autofocus>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center">
+                 <span class="" id="txt_name">  </span>
+            </div>
+            <div class="form-group row">
+                <label for="example-number-input" class="col-4 col-form-label justify-content-center">钻石数量</label>
+                <div class="col-8">
+                    <input class="form-control" type="number"  id="cards" placeholder="充值钻石数量" required>
+                </div>
+            </div>
+        </div>
+        <div class="p-2">
+            <button type="submit" class="btn btn-primary btn-lg w-100 btn-block" id="charge">充 值</button>
+        </div>
+        <div class="alert" role="alert" id="alert">
+        </div>
+    </div>
+    <script type="text/javascript" src="./sell.js"></script>
+</body>
+</html>
