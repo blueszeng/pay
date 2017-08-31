@@ -8,8 +8,8 @@ const wrapRoute = (fn, ...args) => {
     }
     const isPost = ctx.method === 'POST'
     const { id, key } = ctx.request.query
-    const isCheck = args.length > 0 ? !!args[0].isCheck
-    const isToken = args.length > 0 ? !!args[0].isToken
+    const isCheck = args.length > 0 ? !!args[0].isCheck : false
+    const isToken = args.length > 0 ? !!args[0].isToken : false
     if (isCheck) {  // 是否需要验证
       if (!id || !key) {
         if (ctx.request.path.indexOf('login') < 0) {
@@ -52,21 +52,22 @@ const wrapRoute = (fn, ...args) => {
           return;
         }
       }
-
-      try {
+    }
+     try {
+       console.log('enter===>')
         const result = await fn.apply(ctx, [ctx, ...args])
         return response(isPost, result)
       } catch (err) {
+        console.log('enter===>22', err)
         return response(isPost, err)
       }
-    }
 
 
   }
 }
 
 
-const wrapAllRoute = (controllerObject, check = {isCheck: false, isToken: false}) => {
+const wrapAllRoute = (controllerObject, check = { isCheck: false, isToken: false }) => {
   for (let i in controllerObject) {
     if (_.isFunction(controllerObject[i])) {
       controllerObject[i] = wrapRoute(controllerObject[i], check)

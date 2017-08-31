@@ -3,15 +3,16 @@ import Router from 'koa-router'
 import dyh from '../controllers/dyh'
 import wechat from '../controllers/wechat'
 import { wrapRoute } from '../utils/wrapRoute'
-import settings from './config/settings'
+import settings from '../config/settings'
 var version = settings.server.version;
 
 const router = Router({
   prefix: '/wechat'
 })
 
+console.log(`/dyh/${version}/page`)
 //不需要token认证
-let check = { isCheck: true, isToken: false } // default false, false
+let check = { isCheck: false, isToken: false } // default false, false
 router.get(`/dyh/${version}/login`, wrapRoute(dyh.login, check))
 router.get(`/dyh/${version}/order`, wrapRoute(dyh.order, check))
 router.get(`/dyh/${version}/getusername`, wrapRoute(dyh.getusername, check))

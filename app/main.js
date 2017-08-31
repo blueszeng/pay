@@ -1,6 +1,3 @@
-var settings = require("../config/settings");
-var dbMaster = require("./dao/dbMaster");
-dbMaster.Init(settings.db);
 var userManager = require("./userManager");
 var orderManager = require("./orderManager");
 var token = require("./token");

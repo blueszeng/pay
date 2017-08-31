@@ -1,7 +1,8 @@
 const redis = require('redis')
-const config = require('./config')
+const config = require('../config/settings')
+console.log(config.redis)
 import wrapper from 'co-redis'
-let redisClient = redis.createClient(config.redisUrl, {})
+let redisClient = redis.createClient(config.redis.redisUrl, {})
 redisClient = wrapper(redisClient)
 let HASH_KEY_EXPIRE =  120
 let redisAvailable = false

@@ -2,7 +2,7 @@
 
 const server = {
 	ip: "",
-	port: 80,
+	port: 3000,
 	gameType: "sg",
 	baseToken: "agarxhqb123pajloads4ga8xrunpagkjwlaw456xnpcagl29w4rxn",
 	version: 'v1',
@@ -119,5 +119,6 @@ module.exports = {
 	product,
 	log,
 	dyh,
+	redis,
 	dyhProduct
 }

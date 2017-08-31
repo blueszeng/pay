@@ -1,17 +1,18 @@
 
+var settings = require("../config/settings");
+var dbMaster = require("../app/dao/dbMaster");
+dbMaster.Init(settings.db);
 
-
-let settings = require("../config/settings")
-let orderManager = require("./dyh_orderManger")
-let userManager = require("./userManager")
-let token = require("./token")
+let orderManager = require("../app/dyh_orderManger")
+let userManager = require("../app/userManager")
+let token = require("../app/token")
 let xml2js = require('xml2js')
-let api = require("./wechat/dyhwechat")
+let api = require("../app/wechat/dyhwechat")
 let async = require("async")
 let request = require("request")
 let logger = require('log4js').getLogger("app")
 let product = settings.dyhProduct
-let ErrorCode = require("./ErrorCode")
+let ErrorCode = require("../app/ErrorCode")
 
 
 const state = "6688"
@@ -41,10 +42,10 @@ let frequency = {}
 const login = async (ctx, next) => {
   const { code } = ctx.request.query
   if (!code || ctx.request.query.state != state) {
-    return Promise.reject({ code: ErrorCode.ParamError })
+    return Promise.reject({ codec: ErrorCode.ParamError })
   }
   try {
-    let ret = await api.getAccessToken(code)
+    let ret = await api.getAccessTokenAsync(code)
     let openid = ret.data.openid
     let key = token.create(settings.server.gameType, openid, Date.now(), settings.server.baseToken)
     userCache[openid] = key

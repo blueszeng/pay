@@ -1,6 +1,7 @@
 var settings = require("../../config/settings");
 var wxpay = require('./wxpay');
 var fs = require("fs");
+import bluebird from 'bluebird'
 //初始化订阅号
 var dyhToken = null;
 var dyhTime = 0;
@@ -40,5 +41,5 @@ var wpay = new wxpay();
 wpay.init(settings.dyh);
 api.wxpay = wpay;
 
-
+bluebird.promisifyAll(api);  // 转换成promise函数  Async 
 module.exports = api;

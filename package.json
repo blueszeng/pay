@@ -33,6 +33,8 @@
     "koa-static": "^3.0.0",
     "log4js": "^1.1.1",
     "moment": "^2.18.1",
+    "mongoose": "^4.11.9",
+    "mongoose-auto-increment": "^5.0.1",
     "mysql": "^2.13.0",
     "node-fetch": "^2.0.0-alpha.8",
     "node-schedule": "^1.2.3",
@@ -47,6 +49,7 @@
     "uuid": "^3.0.1",
     "wechat-api": "^1.35.0",
     "wechat-enterprise": "^0.1.1",
+    "wechat-oauth": "^1.2.1",
     "wechat-pay": "^0.2.5",
     "xml2js": "^0.4.17"
   },

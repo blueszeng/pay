@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var autoIncrement = require('mongoose-auto-increment');
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
+let autoIncrement = require('mongoose-auto-increment');
 /*
 schema type
 String
@@ -14,7 +14,7 @@ Array
 */
 
 //define chistory Schema
-var dyh_order = new Schema({
+let dyh_order = new Schema({
   id: Number,
   openid: String,
   userid: String,

@@ -1,5 +1,7 @@
+
 import { load } from '../utils/load'
 import settings from '../config/settings'
+var api = require("../app/wechat/wechat");
 let product = settings.product
 let nameCache = {}
 
@@ -237,7 +239,7 @@ const sell = async (ctx, next) => {
  * @param {Object} ctx  
  * @param {Object} next 
  */
-exports.sellhistory = async (ctx, next) => {
+const sellhistory = async (ctx, next) => {
     let page = Number(ctx.request.query.page)
     const { id } = ctx.request.query
     page = page || 0
@@ -269,7 +271,7 @@ exports.sellhistory = async (ctx, next) => {
  * @param {Object} ctx  
  * @param {Object} next 
  */
-exports.buyhistory = async (ctx, next) => {
+const buyhistory = async (ctx, next) => {
     let page = Number(ctx.request.query.page)
     const { id } = ctx.request.query
     page = page || 0
@@ -302,7 +304,7 @@ exports.buyhistory = async (ctx, next) => {
  * @param {Object} ctx  
  * @param {Object} next 
  */
-exports.tmpcharge = async (ctx, next) => {
+const tmpcharge = async (ctx, next) => {
     let num = Number(ctx.request.query.num)
     const { id } = ctx.request.query
     if (!id || !num || req.query.aha != "jdyjdyjdy")

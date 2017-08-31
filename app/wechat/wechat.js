@@ -1,7 +1,10 @@
 var API = require("./API")
 var settings = require("../../config/settings")
+
 var config = settings.wechat
 var wxpay = require('./wxpay')
+import bluebird from 'bluebird'
+import cache from '../../utils/redis'
 var fs = require("fs")
 
 const expire = 7200000
@@ -48,4 +51,6 @@ var wpay = new wxpay()
 wpay.init(config)
 api.wxpay = wpay
 
+bluebird.promisifyAll(api);  // 转换成promise函数  Async 
+console.log(api)
 module.exports = api
