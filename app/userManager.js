@@ -1,6 +1,5 @@
-var accountUser = require('./dao/accountUser')
-var UserModel = require('./dao/UserModel')
-var utils = require('./utils')
+import accountUser from './dao/accountUser'
+import UserModel from './dao/UserModel'
 var cacheUser = {
 
 }
@@ -83,4 +82,13 @@ const FindInGameByPhone = async (id, cb) => {
 	} catch (err) {
 		return Promise.reject(err)
 	}
+}
+
+
+export default {
+	GetUserFast,
+	FindUserByID,
+	createUser,
+	FindInGameByID,
+	FindInGameByPhone
 }

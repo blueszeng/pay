@@ -1,42 +1,47 @@
 
 
-var buyHistory = require("../app/dao/buyHistory");
-var account = require("../app/dao/accountUser");
+import buyHistory from '../app/dao/buyHistory'
+import account from '../app/dao/accountUser'
 
-var hash = {};
-var count = 0;
-var QueryUid = function (id, cb) {
-	console.log(id);
-	account.findOne({ id: id }, function (err, ret) {
-		console.log(id, ret);
-		hash[id] = ret.userid;
-		cb();
-	});
+let hash = {};
+let count = 0;
+
+const QueryUid = async function (id) {
+	try {
+		let ret = await account.findOne({ id: id })
+		hash[id] = ret.userid
+		return Promise.resolve()
+	} catch (err) {
+		console.log(err)
+		return Promise.reject(err)
+	}
 }
 
-exports.QueryOrder = function (cb) {
-	var query = buyHistory.find({ status: 1 });
-	query.exec(function (err, result) {
-		if (err)
-			return cb(err);
-
-		console.log(result.length);
-		for (var i = 0, len = result.length; i < len; i++) {
-			hash[result[i].uid] = 0;
+const QueryOrder = async function () {
+	try {
+		let query = buyHistory.find({ status: 1 })
+		let result = await query.exec()
+		for (let i = 0, len = result.length; i < len; i++) {
+			hash[result[i].uid] = 0
 		}
-
-		count = 0;
-		for (var src in hash) {
+		count = 0
+		for (let src in hash) {
 			count++
-			QueryUid(src, function () {
-				count--;
-				if (count == 0) {
-					for (var i = 0, len = result.length; i < len; i++) {
-						result[i].userid = hash[result[i].uid];
-					}
-					return cb(null, result);
+			await QueryUid(src)
+			count--;
+			if (count == 0) {
+				for (let i = 0, len = result.length; i < len; i++) {
+					result[i].userid = hash[result[i].uid]
 				}
-			})
+				return Promise.resolve(result)
+			}
 		}
-	});
+	} catch (err) {
+		console.log(err)
+		return Promise.reject(err)
+	}
+}
+
+export default {
+    QueryOrder
 }

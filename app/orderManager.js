@@ -1,7 +1,5 @@
-
-var buyHistory = require('./dao/buyHistory')
-var sellHistory = require('./dao/sellHistory')
-var utils = require('./utils')
+import buyHistory from './dao/buyHistory'
+import sellHistory from './dao/sellHistory'
 
 var orderCache = {}
 function AddItem(openid, data) {

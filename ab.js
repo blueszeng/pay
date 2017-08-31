@@ -1,13 +1,7 @@
-const f = async () => {
-  try {
+var ef = require('./utils/ef')
+// console.log("sdfsdfsfsd", ef)
+ef.init()
+// import('./utils/cd').then(() => )
+// console.log('234234234')
 
-     await Promise.reject({ab: "hello world"});
- 
-  } catch(e) {
-    console.log(e)
-  }
-  return await Promise.resolve({ab: "hello world"});
-}
-
-f()
-// .then(v => console.log(v))
+console.log("sdfsdfsfsd", ef)

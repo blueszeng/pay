@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var autoIncrement = require('mongoose-auto-increment');
+import mongoose from 'mongoose'
+import autoIncrement from 'mongoose-auto-increment'
+let Schema = mongoose.Schema;
 /*
 schema type
 String
@@ -14,7 +14,7 @@ Array
 */
 
 //define account Schema
-var accountSchema = new Schema({
+let accountSchema = new Schema({
   //id: String,
   id: String,
   userid: String,
@@ -32,4 +32,4 @@ var accountSchema = new Schema({
 //     incrementBy: 1
 // });
 
-module.exports = mongoose.model("account", accountSchema);
+export default mongoose.model("account", accountSchema);

@@ -1,6 +1,6 @@
-let mongoose = require('mongoose');
+import mongoose from 'mongoose'
+import autoIncrement from 'mongoose-auto-increment'
 let Schema = mongoose.Schema;
-let autoIncrement = require('mongoose-auto-increment');
 /*
 schema type
 String
@@ -34,4 +34,4 @@ dyh_order.plugin(autoIncrement.plugin, {
     incrementBy: 1
 });
 
-module.exports = mongoose.model("dyh_order", dyh_order);
+export default mongoose.model("dyh_order", dyh_order);

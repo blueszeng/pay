@@ -54,7 +54,7 @@
     "xml2js": "^0.4.17"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node ./src/app.js",
+    "start": "nodemon --exec babel-node ./app.js",
     "watch": "gulp watch",
     "e2e": "testcafe chrome ./e2es/test.js",
     "unit": "ava  ./tests/test --verbose"
@@ -70,6 +70,7 @@
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.2.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-node5": "^12.0.1",

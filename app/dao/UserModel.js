@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var autoIncrement = require('mongoose-auto-increment');
+import mongoose from 'mongoose'
+import autoIncrement from 'mongoose-auto-increment'
+let Schema = mongoose.Schema;
 /*
 schema type
 String
@@ -14,7 +14,7 @@ Array
 */
 
 //define user Schema
-var userSchema = new Schema({
+let userSchema = new Schema({
   id: String,
   openid: String,
   name: String,
@@ -33,4 +33,4 @@ userSchema.plugin(autoIncrement.plugin, {
 
 
 
-module.exports = mongoose.model("user", userSchema);
+export default mongoose.model("user", userSchema);

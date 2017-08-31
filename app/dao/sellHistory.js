@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var autoIncrement = require('mongoose-auto-increment');
+import mongoose from 'mongoose'
+import autoIncrement from 'mongoose-auto-increment'
+let Schema = mongoose.Schema;
 /*
 schema type
 String
@@ -14,7 +14,7 @@ Array
 */
 
 //define chistory Schema
-var chistorySchema = new Schema({
+let chistorySchema = new Schema({
   id: Number,
   pid: String,
   uid: String,
@@ -31,4 +31,4 @@ chistorySchema.plugin(autoIncrement.plugin, {
     incrementBy: 1
 });
 
-module.exports = mongoose.model("sell_history", chistorySchema);
+export default  mongoose.model("sell_history", chistorySchema);

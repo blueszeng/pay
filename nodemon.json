@@ -11,15 +11,15 @@
   "events": {
   },
   "watch": [
-    "src/app.js",
-    "src/common/",
-    "src/routes/",
-    "src/configs/",
-    "src/controllers/",
-    "src/middlewares/",
-    "src/models/",
-    "src/services/",
-    "src/utils/"
+    "app.js",
+    "app/",
+    "routes/",
+    "configs/",
+    "controllers/",
+    "middlewares/",
+    "models/",
+    "services/",
+    "utils/"
   ],
   "env": {
     "NODE_ENV": "development"

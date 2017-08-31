@@ -1,6 +1,6 @@
-
 import wechat from 'wechat-enterprise'
-import fetch from 'node-fetch'
+
+
 
 var API = wechat.API;
 var postJSON = wechat.util.postJSON;
@@ -43,4 +43,7 @@ extend.convertOpenid = async function (info, callback) {
 // };
 
 API.mixin(extend);
+wechat.middleware = function() {
+
+}
 module.exports = API;

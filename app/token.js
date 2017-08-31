@@ -1,4 +1,4 @@
-var crypto = require('crypto');
+import crypto from 'crypto'
 /**
  * Create token by uid. Encrypt uid and timestamp to get a token.
  * 

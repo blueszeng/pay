@@ -1,6 +1,5 @@
-let utils = require('./utils')
-let dyh_order = require('./dao/dyh_order')
-
+import dyh_order from './dao/dyh_order'
+// console.log("zengyongaguang")
 let orderCache = {}
 function AddItem(orderid, data) {
 	orderCache[orderid] = data

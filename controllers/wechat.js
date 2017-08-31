@@ -1,7 +1,10 @@
-
 import { load } from '../utils/load'
 import settings from '../config/settings'
-var api = require("../app/wechat/wechat");
+import api from '../app/wechat/wechat'
+import fetch from 'node-fetch'
+import log4js from 'log4js'
+log4js.configure(settings.log)
+const logger = log4js.getLogger(__dirname)
 let product = settings.product
 let nameCache = {}
 
@@ -218,8 +221,7 @@ const sell = async (ctx, next) => {
         }
         user.data.cards -= num
         let params = "?uid=" + uid + "&count=" + num
-        let body = await request(settings.server.payUrl + params)
-        let data = JSON.parse(body)
+        let data = await fetch(settings.server.payUrl + params).json()
         if (data.code != 200) {
             myUser.data.cards += num
             return Promise.reject({ code: ErrorCode.SellFailed })
@@ -326,13 +328,13 @@ const tmpcharge = async (ctx, next) => {
 
 
 export default {
-  login,
-  order,
-  wxnotify,
-  getusername,
-  getcard,
-  sell,
-  sellhistory,
-  buyhistory,
-  tmpcharge
+    login,
+    order,
+    wxnotify,
+    getusername,
+    getcard,
+    sell,
+    sellhistory,
+    buyhistory,
+    tmpcharge
 }

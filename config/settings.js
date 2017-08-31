@@ -1,5 +1,3 @@
-
-
 const server = {
 	ip: "",
 	port: 3000,

@@ -1,18 +1,23 @@
 
-var settings = require("../config/settings");
-var dbMaster = require("../app/dao/dbMaster");
-dbMaster.Init(settings.db);
 
-let orderManager = require("../app/dyh_orderManger")
-let userManager = require("../app/userManager")
-let token = require("../app/token")
-let xml2js = require('xml2js')
-let api = require("../app/wechat/dyhwechat")
-let async = require("async")
-let request = require("request")
-let logger = require('log4js').getLogger("app")
-let product = settings.dyhProduct
-let ErrorCode = require("../app/ErrorCode")
+import settings from '../config/settings'
+import dbMaster from '../app/dao/dbMaster'
+
+
+import token from '../app/token'
+import api from '../app/wechat/dyhwechat'
+import ErrorCode from '../app/ErrorCode'
+import fetch from 'node-fetch'
+import xml2js from 'xml2js'
+import log4js from 'log4js'
+
+//引处需要同步加载 初始化db 后才能加载 Schema
+// 因为 import加载是静态异步加载,  require为同步加载 
+dbMaster.Init(settings.db)  // init db
+const orderManager = require("../app/dyh_orderManger")
+const userManager = require("../app/userManager")
+let logger = log4js.getLogger(__dirname)
+
 
 
 const state = "6688"
@@ -181,8 +186,7 @@ const wxnotify = async (ctx, next) => {
     order.status = 1
     let num = Number(order.count)
     let params = "?uid=" + order.userid + "&count=" + num
-    let body = await request(settings.server.payUrl + params)
-    let data = JSON.parse(body)
+    let data = await fetch(settings.server.payUrl + params).json()
     if (data.code != 200) {
       logger.error("dyh request", data)
     }

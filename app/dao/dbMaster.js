@@ -1,15 +1,16 @@
-var mongoose = require('mongoose');
-var autoIncrement = require('mongoose-auto-increment');
+import mongoose from 'mongoose'
+import autoIncrement from 'mongoose-auto-increment'
+let logger = require('log4js').getLogger(__dirname)
 
 function CreateDBManager(){
-	var db = mongoose.connection;
+	let db = mongoose.connection;
 	db.on('error', console.error.bind(console, 'connection error:'));
 	db.once('open', function (callback) {
 		// yay!
-		console.log("db connection sucess!");
+		logger.warn("db connection sucess!");
 	});
 	
-	console.log("db connection start!");
+	logger.info("db connection start!");
 	
 	// connect to host
 
@@ -18,11 +19,11 @@ function CreateDBManager(){
 		Init: function(DBConfig)
 		{
 			mongoose.Promise = global.Promise;
-			var connection = mongoose.createConnection('mongodb://'+ DBConfig.host + '/' + DBConfig.database);
+			let connection = mongoose.createConnection('mongodb://'+ DBConfig.host + '/' + DBConfig.database);
 			autoIncrement.initialize(connection);
 		}
 	};
 }
 
 
-module.exports = CreateDBManager();
+export default CreateDBManager();
