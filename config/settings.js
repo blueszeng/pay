@@ -92,24 +92,48 @@ const product = {
 	},
 };
 
+
+// const log = {
+// 	appender: {
+// 		file: {
+// 			type: 'file',
+// 			filename: "logs/log.log",
+// 			maxLogSize: 10 * 1024 * 1024, // = 10Mb
+// 			numBackups: 5,// keep five backup files
+// 			// layout: {
+// 			// 	type: "basic"
+// 			// }
+// 		},
+// 		// out: {
+// 		// 	type: 'console'
+// 		// }
+// 	},
+// 	categories: {
+// 		default: { appenders: ['file',  'out'], level: 'info' }
+// 	}
+// }
+
+
 const log = {
-	appenders: [
-		{ type: 'console' },
-		{
-			type: "file",
-			filename: "logs/log.log",
-			maxLogSize: 1048576,
-			layout: {
-				type: "basic"
-			},
-			backups: 5,
-			category: "app"
-		}],
-	levels: {
-		app: "WARN"
+  appenders: [
+    { type: 'console' },
+    {
+		type: "file",
+		filename: "logs/log.log",
+		maxLogSize: 1048576,
+		// layout: {
+		// 	type: "basic"
+		// },
+		backups: 5,
+		// category: "app"
+    }],
+  	levels: {
+	   app: "WARN"
 	},
 	replaceConsole: true,
 }
+
+
 module.exports = {
 	server,
 	db,

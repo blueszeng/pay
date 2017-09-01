@@ -5,30 +5,28 @@ import wechat from '../controllers/wechat'
 import { wrapRoute } from '../utils/wrapRoute'
 import settings from '../config/settings'
 import middleware from '../app/wechat/middleware'
-var version = settings.server.version;
-
+let version = settings.server.version;
+import log4js from 'log4js'
+const logger = log4js.getLogger(__dirname)
 const router = Router({
   prefix: '/wechat'
 })
 
-
-
-
 router.all('/sg',
-middleware.text(async function (message, ctx, next) {
+  middleware.text(async function (message, ctx, next) {
     // TODO
     logger.log(req.url)
     logger.log("location", req.weixin)
     ctx.status = 200
     ctx.body = ""
-}).text(async function (message, ctx, next) {
+  }).text(async function (message, ctx, next) {
     // TODO
     logger.log(req.url)
     logger.log("location", req.weixin)
     ctx.status = 200
     ctx.body = ""
-})
-.middlewarify())
+  })
+    .middlewarify())
 
 
 //不需要token认证

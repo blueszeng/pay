@@ -1,23 +1,25 @@
 const redis = require('redis')
 const config = require('../config/settings')
-console.log(config.redis)
+import log4js from 'log4js'
 import wrapper from 'co-redis'
 let redisClient = redis.createClient(config.redis.redisUrl, {})
 redisClient = wrapper(redisClient)
-let HASH_KEY_EXPIRE =  120
+const logger = log4js.getLogger(__dirname)
+let HASH_KEY_EXPIRE = 120
 let redisAvailable = false
 redisClient.on('error', (_error) => {
-  console.log('connect error===>')
+  logger.info('connect error...')
+
   redisAvailable = false
 })
 
 redisClient.on('end', () => {
-  console.log('connect end===>')
+  logger.warn('connect end...')
   redisAvailable = false
 })
 
 redisClient.on('connect', () => {
-  console.log('connect redis===>')
+  logger.info('connect redis success...')
   redisAvailable = true
 })
 const setCache = async function (key, value, tty) {
@@ -73,7 +75,7 @@ const getHashCache = async function (key, field, isStoreJsonField = false) {
     let data = {}
     let hashData = await redisClient.hget(key, field)
     data = hashData
-    console.log(data)
+    // console.log(data)
     if (isStoreJsonField) {
       data = JSON.parse(hashData.toString());
     }
@@ -88,7 +90,7 @@ const getHashCache = async function (key, field, isStoreJsonField = false) {
     }
   } else {
     if (!!hashData) {
-       data = hashData
+      data = hashData
     }
   }
   return Promise.resolve(data)

@@ -14,7 +14,7 @@
     "app.js",
     "app/",
     "routes/",
-    "configs/",
+    "config/",
     "controllers/",
     "middlewares/",
     "models/",

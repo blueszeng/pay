@@ -3,7 +3,6 @@ import settings from '../config/settings'
 import api from '../app/wechat/wechat'
 import fetch from 'node-fetch'
 import log4js from 'log4js'
-log4js.configure(settings.log)
 const logger = log4js.getLogger(__dirname)
 let product = settings.product
 let nameCache = {}

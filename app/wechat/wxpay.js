@@ -2,13 +2,13 @@ import fs from 'fs'
 import ejs from 'ejs'
 import crypto from 'crypto'
 import fetch from 'node-fetch'
-import log4js from 'log4js'
 import settings from '../../config/settings'
-log4js.configure(settings.log)
+import log4js from 'log4js'
 const logger = log4js.getLogger(__dirname)
 let messageTpl = fs.readFileSync(__dirname + '/message.ejs', 'utf-8')
 
 function createPay() {
+ 
     let key = ""
     let mch_id = ""
     let appid = ""
@@ -19,10 +19,10 @@ function createPay() {
             mch_id = wechat.mchID
             notify_url = wechat.cb
             appid = wechat.appID
-            console.log(notify_url)
+            logger.info(notify_url)
             fetch(wechat.cb, { method: 'POST', body: "<xml> <return_code>FAIL</return_code> </xml>" })
             .then(res => {
-                logger.log(res)
+                logger.debug(res)
             }).catch(err => {
                 logger.log(err)
             })

@@ -1,19 +1,21 @@
 import settings from '../../config/settings'
 import wxpay from './wxpay'
 import bluebird from 'bluebird'
+import log4js from 'log4js'
+const logger = log4js.getLogger(__dirname)
 //初始化订阅号
 let OAuth = require('wechat-oauth')
 let api = new OAuth(settings.dyh.appID, settings.dyh.secret, function (openid, callback) {
     cache.client.hget('wechat:oauth', openid)
         .then((result) => {
             if (!result) {
-                log('在缓存中获取用户(openid: %s)微信OAuth Token为空', openid)
+                logger.warn('在缓存中获取用户(openid: %s)微信OAuth Token为空', openid)
                 return callback(null, null)
             }
             let dyhToken = JSON.parse(result)
             callback(null, dyhToken)
         }).catch((err) => {
-            log('在缓存中获取用户(openid: %s)微信OAuth Token错误: %s', openid, err)
+            logger.warn('在缓存中获取用户(openid: %s)微信OAuth Token错误: %s', openid, err)
             return callback(err)
         })
 }, function (openid, token, callback) {
@@ -21,7 +23,7 @@ let api = new OAuth(settings.dyh.appID, settings.dyh.secret, function (openid, c
         .then(() => {
             return callback(null, token)
         }).catch((err) => {
-            log('向缓存中写入用户(openid: %s)微信OAuth Token错误: %s', openid, err)
+            logger.warn('向缓存中写入用户(openid: %s)微信OAuth Token错误: %s', openid, err)
             return callback(err)
         })
 })
