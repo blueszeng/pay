@@ -22,11 +22,11 @@ var globe = {};
 var _v = 0;
 function callAPi(api, params, cb) {
 
-    params = params || {};
+    params = params || {}; 
     params["_v"] = _v;
     _v++;
     $.ajax({
-        url: "http://120.76.182.17/dyh/v1/" + api,
+        url: "http://101.132.96.27:4000/api/wechat/dyh/v1/" + api,
 
         // The name of the callback parameter, as specified by the YQL service
         jsonp: "callback",

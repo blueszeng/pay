@@ -4,7 +4,7 @@ import log4js from 'log4js'
 import wrapper from 'co-redis'
 let redisClient = redis.createClient(config.redis.redisUrl, {})
 redisClient = wrapper(redisClient)
-const logger = log4js.getLogger(__dirname)
+const logger = log4js.getLogger(`${__dirname}/${__filename}`)
 let HASH_KEY_EXPIRE = 120
 let redisAvailable = false
 redisClient.on('error', (_error) => {

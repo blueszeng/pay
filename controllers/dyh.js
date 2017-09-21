@@ -16,7 +16,7 @@ import log4js from 'log4js'
 dbMaster.Init(settings.db)  // init db
 const orderManager = require("../app/dyh_orderManger")
 const userManager = require("../app/userManager")
-let logger = log4js.getLogger(__dirname)
+let logger = log4js.getLogger(`${__dirname}/${__filename}`)
 
 
 
@@ -124,8 +124,8 @@ const order = async (ctx, next) => {
     let ret = { code: ErrorCode.OK, data: pkgs }
     return Promise.resolve(ret)
   } catch (err) {
-    logger.log(err)
-    Promise.reject({ code: ErrorCode.OrderFailed })
+    logger.info(err)
+    return Promise.reject({ code: ErrorCode.OrderFailed })
   }
 }
 

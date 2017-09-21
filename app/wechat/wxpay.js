@@ -4,11 +4,10 @@ import crypto from 'crypto'
 import fetch from 'node-fetch'
 import settings from '../../config/settings'
 import log4js from 'log4js'
-const logger = log4js.getLogger(__dirname)
+const logger = log4js.getLogger(`${__dirname}/${__filename}`)
 let messageTpl = fs.readFileSync(__dirname + '/message.ejs', 'utf-8')
 
 function createPay() {
- 
     let key = ""
     let mch_id = ""
     let appid = ""
@@ -24,7 +23,7 @@ function createPay() {
             .then(res => {
                 logger.debug(res)
             }).catch(err => {
-                logger.log(err)
+                logger.info(err)
             })
          },
         getXMLNodeValue: function (node_name, xml) {

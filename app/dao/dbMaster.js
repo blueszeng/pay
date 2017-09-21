@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import autoIncrement from 'mongoose-auto-increment'
-let logger = require('log4js').getLogger(__dirname)
+let logger = require('log4js').getLogger(`${__dirname}/${__filename}`)
 
 function CreateDBManager(){
 	let db = mongoose.connection;

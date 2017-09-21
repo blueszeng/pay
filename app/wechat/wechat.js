@@ -5,7 +5,7 @@ import wxpay from './wxpay'
 import bluebird from 'bluebird'
 import cache from '../../utils/redis'
 import log4js from 'log4js'
-const logger = log4js.getLogger(__dirname)
+const logger = log4js.getLogger(`${__dirname}/${__filename}`)
 const expire = 7200000
 //初始化微信企业号
 var api = new API(config.corpId, config.secret, config.angentid, function (callback) {

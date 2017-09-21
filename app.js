@@ -9,11 +9,10 @@ import bodyParser from 'koa-bodyparser'
 import router from './routes'
 import settings from './config/settings'
 import log4js from 'log4js'
+
 log4js.configure(settings.log)
-
+const logger = log4js.getLogger(`${__dirname}/${__filename}`)
 const app = new Koa()
-
-const logger = log4js.getLogger(__dirname)
 app.use(convert(cors()))
 
 app.use(convert(require('koa-static')(path.join(__dirname, './html'))))

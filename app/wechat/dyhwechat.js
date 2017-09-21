@@ -2,7 +2,7 @@ import settings from '../../config/settings'
 import wxpay from './wxpay'
 import bluebird from 'bluebird'
 import log4js from 'log4js'
-const logger = log4js.getLogger(__dirname)
+const logger = log4js.getLogger(`${__dirname}/${__filename}`)
 //初始化订阅号
 let OAuth = require('wechat-oauth')
 let api = new OAuth(settings.dyh.appID, settings.dyh.secret, function (openid, callback) {

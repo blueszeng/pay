@@ -26,7 +26,8 @@ function callAPi(api, params, cb) {
     params["_v"] = _v;
     _v++;
     $.ajax({
-        url: "http://120.76.182.17/v1/" + api,
+        
+        url: "http://101.132.96.27:4000/api/wechat/v1/" + api,
 
         // The name of the callback parameter, as specified by the YQL service
         jsonp: "callback",

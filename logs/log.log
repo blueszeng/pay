@@ -18,3 +18,168 @@
 [2017-08-31 22:23:16.402] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
 [2017-08-31 22:23:31.286] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
 [2017-08-31 22:23:31.298] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-02 00:18:52.810] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-02 00:18:52.823] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-02 00:30:27.813] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-02 00:30:27.828] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-02 00:31:34.568] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-02 00:31:34.579] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-02 00:31:55.876] [INFO] console -   [90m<--[39m [1mGET[22m [90m/[39m
+[2017-09-02 00:31:55.882] [INFO] console -   [90m-->[39m [1mGET[22m [90m/[39m [33m404[39m [90m6ms[39m [90m-[39m
+[2017-09-02 00:32:04.107] [INFO] console -   [90m<--[39m [1mGET[22m [90m/download[39m
+[2017-09-02 00:32:04.109] [INFO] console -   [90m-->[39m [1mGET[22m [90m/download[39m [33m404[39m [90m14ms[39m [90m-[39m
+[2017-09-02 00:32:43.181] [INFO] console -   [90m<--[39m [1mGET[22m [90m/download/ningdumj[39m
+[2017-09-02 00:32:43.182] [INFO] console -   [90m-->[39m [1mGET[22m [90m/download/ningdumj[39m [33m404[39m [90m1ms[39m [90m-[39m
+[2017-09-02 00:33:34.741] [ERROR] console - (node:77452) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): TypeError: Cannot read property 'level' of undefined
+[2017-09-02 00:33:34.744] [ERROR] console - (node:77452) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 2): TypeError: Cannot read property 'level' of undefined
+[2017-09-02 00:34:24.476] [INFO] console -   [90m<--[39m [1mGET[22m [90m/download/pub/dyh.html[39m
+[2017-09-02 00:34:24.477] [INFO] console -   [90m-->[39m [1mGET[22m [90m/download/pub/dyh.html[39m [33m404[39m [90m1ms[39m [90m-[39m
+[2017-09-02 00:34:35.424] [INFO] console -   [90m<--[39m [1mGET[22m [90m/download/pub/pay/dyh.html[39m
+[2017-09-02 00:34:35.425] [INFO] console -   [90m-->[39m [1mGET[22m [90m/download/pub/pay/dyh.html[39m [33m404[39m [90m1ms[39m [90m-[39m
+[2017-09-02 00:34:38.537] [INFO] console -   [90m<--[39m [1mGET[22m [90m/download/pub/pay/dyh.html[39m
+[2017-09-02 00:34:38.537] [INFO] console -   [90m-->[39m [1mGET[22m [90m/download/pub/pay/dyh.html[39m [33m404[39m [90m0ms[39m [90m-[39m
+[2017-09-02 00:36:10.499] [INFO] console -   [90m<--[39m [1mGET[22m [90m/pub/pay/[39m
+[2017-09-02 00:36:10.499] [INFO] console -   [90m-->[39m [1mGET[22m [90m/pub/pay/[39m [33m404[39m [90m0ms[39m [90m-[39m
+[2017-09-02 00:36:13.837] [INFO] console -   [90m<--[39m [1mGET[22m [90m/pub/pay/sell[39m
+[2017-09-02 00:36:13.838] [INFO] console -   [90m-->[39m [1mGET[22m [90m/pub/pay/sell[39m [33m404[39m [90m1ms[39m [90m-[39m
+[2017-09-02 00:39:42.835] [INFO] console -   [90m<--[39m [1mGET[22m [90m/[39m
+[2017-09-02 00:39:42.837] [INFO] console -   [90m-->[39m [1mGET[22m [90m/[39m [33m404[39m [90m2ms[39m [90m-[39m
+[2017-09-02 00:44:08.356] [INFO] console -   [90m<--[39m [1mGET[22m [90m/[39m
+[2017-09-02 00:44:08.357] [INFO] console -   [90m-->[39m [1mGET[22m [90m/[39m [33m404[39m [90m1ms[39m [90m-[39m
+[2017-09-02 00:44:11.191] [INFO] console -   [90m<--[39m [1mGET[22m [90m/[39m
+[2017-09-02 00:44:11.192] [INFO] console -   [90m-->[39m [1mGET[22m [90m/[39m [33m404[39m [90m1ms[39m [90m-[39m
+[2017-09-02 00:44:14.633] [INFO] console -   [90m<--[39m [1mGET[22m [90m/[39m
+[2017-09-02 00:44:14.634] [INFO] console -   [90m-->[39m [1mGET[22m [90m/[39m [33m404[39m [90m1ms[39m [90m-[39m
+[2017-09-02 00:45:05.192] [INFO] console -   [90m<--[39m [1mGET[22m [90m/[39m
+[2017-09-02 00:45:05.193] [INFO] console -   [90m-->[39m [1mGET[22m [90m/[39m [33m404[39m [90m1ms[39m [90m-[39m
+[2017-09-02 00:45:47.389] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-02 00:45:47.405] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-02 00:46:47.929] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-02 00:46:47.940] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-02 00:46:59.829] [INFO] console -   [90m<--[39m [1mGET[22m [90m/pub/pay/order[39m
+[2017-09-02 00:46:59.836] [INFO] console -   [90m-->[39m [1mGET[22m [90m/pub/pay/order[39m [33m404[39m [90m8ms[39m [90m-[39m
+[2017-09-02 00:48:48.051] [ERROR] console - (node:78617) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): TypeError: Cannot read property 'level' of undefined
+[2017-09-02 00:48:48.054] [ERROR] console - (node:78617) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 2): TypeError: Cannot read property 'level' of undefined
+[2017-09-02 00:52:19.990] [INFO] console -   [90m<--[39m [1mGET[22m [90m/api/wechat/dyh/v1/[39m
+[2017-09-02 00:52:19.991] [INFO] console -   [90m-->[39m [1mGET[22m [90m/api/wechat/dyh/v1/[39m [33m404[39m [90m1ms[39m [90m-[39m
+[2017-09-02 00:53:07.480] [INFO] console -   [90m<--[39m [1mGET[22m [90m/api/wechat/dyh/v1/login[39m
+[2017-09-02 00:53:07.486] [INFO] console -   [90m-->[39m [1mGET[22m [90m/api/wechat/dyh/v1/login[39m [32m200[39m [90m6ms[39m [90m13b[39m
+[2017-09-18 14:47:58.940] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-18 14:47:58.955] [INFO] /Users/zyg/optimization/pay/utils - connect error...
+[2017-09-18 14:47:58.956] [WARN] /Users/zyg/optimization/pay/utils - connect end...
+[2017-09-18 14:47:59.162] [INFO] /Users/zyg/optimization/pay/utils - connect error...
+[2017-09-18 14:47:59.510] [INFO] /Users/zyg/optimization/pay/utils - connect error...
+[2017-09-18 14:48:00.095] [INFO] /Users/zyg/optimization/pay/utils - connect error...
+[2017-09-18 14:48:01.082] [INFO] /Users/zyg/optimization/pay/utils - connect error...
+[2017-09-18 14:48:02.760] [INFO] /Users/zyg/optimization/pay/utils - connect error...
+[2017-09-18 14:48:05.606] [INFO] /Users/zyg/optimization/pay/utils - connect error...
+[2017-09-18 14:48:10.438] [INFO] /Users/zyg/optimization/pay/utils - connect error...
+[2017-09-18 14:48:18.655] [INFO] /Users/zyg/optimization/pay/utils - connect error...
+[2017-09-18 14:48:32.616] [INFO] /Users/zyg/optimization/pay/utils - connect error...
+[2017-09-18 14:48:56.355] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-18 14:49:59.074] [ERROR] console - (node:64315) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): TypeError: Cannot read property 'level' of undefined
+[2017-09-18 14:49:59.076] [ERROR] console - (node:64315) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 2): TypeError: Cannot read property 'level' of undefined
+[2017-09-18 14:50:36.787] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-18 14:50:36.801] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-18 14:52:36.877] [ERROR] console - (node:64459) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): TypeError: Cannot read property 'level' of undefined
+[2017-09-18 14:52:36.881] [ERROR] console - (node:64459) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 2): TypeError: Cannot read property 'level' of undefined
+[2017-09-18 15:08:31.302] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-18 15:08:31.318] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-18 15:08:35.855] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-18 15:08:35.867] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-18 15:09:18.958] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-18 15:09:18.969] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-18 15:11:18.974] [INFO] /Users/zyg/optimization/pay/app/wechat - { FetchError: request to http://120.76.182.17/dyh/v1/wxnotify failed, reason: socket hang up
+    at ClientRequest.<anonymous> (/Users/zyg/optimization/pay/node_modules/.2.0.0-alpha.8@node-fetch/lib/index.js:1279:11)
+    at emitOne (events.js:96:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.socketOnEnd (_http_client.js:346:9)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:122:9)
+  message: 'request to http://120.76.182.17/dyh/v1/wxnotify failed, reason: socket hang up',
+  type: 'system',
+  errno: 'ECONNRESET',
+  code: 'ECONNRESET' }
+[2017-09-18 15:11:18.989] [INFO] /Users/zyg/optimization/pay/app/wechat - { FetchError: request to http://120.76.182.17/v1/wxnotify failed, reason: socket hang up
+    at ClientRequest.<anonymous> (/Users/zyg/optimization/pay/node_modules/.2.0.0-alpha.8@node-fetch/lib/index.js:1279:11)
+    at emitOne (events.js:96:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.socketOnEnd (_http_client.js:346:9)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:122:9)
+  message: 'request to http://120.76.182.17/v1/wxnotify failed, reason: socket hang up',
+  type: 'system',
+  errno: 'ECONNRESET',
+  code: 'ECONNRESET' }
+[2017-09-18 15:26:44.732] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-18 15:26:44.743] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-18 15:28:37.845] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-18 15:28:37.858] [INFO] /Users/zyg/optimization/pay/utils - connect redis success...
+[2017-09-18 15:29:48.040] [INFO] /Users/zyg/optimization/pay - Listening on port 3000
+[2017-09-18 15:29:48.055] [INFO] /Users/zyg/optimization/pay/utils//Users/zyg/optimization/pay/utils/redis.js - connect redis success...
+[2017-09-18 15:31:48.057] [INFO] /Users/zyg/optimization/pay/app/wechat//Users/zyg/optimization/pay/app/wechat/wxpay.js - { FetchError: request to http://120.76.182.17/dyh/v1/wxnotify failed, reason: socket hang up
+    at ClientRequest.<anonymous> (/Users/zyg/optimization/pay/node_modules/.2.0.0-alpha.8@node-fetch/lib/index.js:1279:11)
+    at emitOne (events.js:96:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.socketOnEnd (_http_client.js:346:9)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:122:9)
+  message: 'request to http://120.76.182.17/dyh/v1/wxnotify failed, reason: socket hang up',
+  type: 'system',
+  errno: 'ECONNRESET',
+  code: 'ECONNRESET' }
+[2017-09-18 15:31:48.074] [INFO] /Users/zyg/optimization/pay/app/wechat//Users/zyg/optimization/pay/app/wechat/wxpay.js - { FetchError: request to http://120.76.182.17/v1/wxnotify failed, reason: socket hang up
+    at ClientRequest.<anonymous> (/Users/zyg/optimization/pay/node_modules/.2.0.0-alpha.8@node-fetch/lib/index.js:1279:11)
+    at emitOne (events.js:96:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.socketOnEnd (_http_client.js:346:9)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:122:9)
+  message: 'request to http://120.76.182.17/v1/wxnotify failed, reason: socket hang up',
+  type: 'system',
+  errno: 'ECONNRESET',
+  code: 'ECONNRESET' }
+[2017-09-20 14:52:48.751] [INFO] /Users/zyg/optimization/pay//Users/zyg/optimization/pay/app.js - Listening on port 3000
+[2017-09-20 14:52:48.763] [INFO] /Users/zyg/optimization/pay/utils//Users/zyg/optimization/pay/utils/redis.js - connect redis success...
+[2017-09-20 15:26:52.015] [INFO] /Users/zyg/optimization/pay//Users/zyg/optimization/pay/app.js - Listening on port 3000
+[2017-09-20 15:26:52.033] [INFO] /Users/zyg/optimization/pay/utils//Users/zyg/optimization/pay/utils/redis.js - connect redis success...
+[2017-09-20 15:28:52.046] [INFO] /Users/zyg/optimization/pay/app/wechat//Users/zyg/optimization/pay/app/wechat/wxpay.js - { FetchError: request to http://120.76.182.17/v1/wxnotify failed, reason: socket hang up
+    at ClientRequest.<anonymous> (/Users/zyg/optimization/pay/node_modules/.2.0.0-alpha.8@node-fetch/lib/index.js:1279:11)
+    at emitOne (events.js:96:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.socketOnEnd (_http_client.js:346:9)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:122:9)
+  message: 'request to http://120.76.182.17/v1/wxnotify failed, reason: socket hang up',
+  type: 'system',
+  errno: 'ECONNRESET',
+  code: 'ECONNRESET' }
+[2017-09-20 15:28:52.064] [INFO] /Users/zyg/optimization/pay/app/wechat//Users/zyg/optimization/pay/app/wechat/wxpay.js - { FetchError: request to http://120.76.182.17/dyh/v1/wxnotify failed, reason: socket hang up
+    at ClientRequest.<anonymous> (/Users/zyg/optimization/pay/node_modules/.2.0.0-alpha.8@node-fetch/lib/index.js:1279:11)
+    at emitOne (events.js:96:13)
+    at ClientRequest.emit (events.js:188:7)
+    at Socket.socketOnEnd (_http_client.js:346:9)
+    at emitNone (events.js:91:20)
+    at Socket.emit (events.js:185:7)
+    at endReadableNT (_stream_readable.js:974:12)
+    at _combinedTickCallback (internal/process/next_tick.js:74:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:122:9)
+  message: 'request to http://120.76.182.17/dyh/v1/wxnotify failed, reason: socket hang up',
+  type: 'system',
+  errno: 'ECONNRESET',
+  code: 'ECONNRESET' }

@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "anchor": "^0.11.5",
-    "art.dialog": "^7.0.0",
     "bcrypt": "^1.0.2",
     "bluebird": "^3.5.0",
     "ccap": "^0.6.10",
@@ -14,9 +13,6 @@
     "hashids": "^1.1.1",
     "is-generator-function": "^1.0.6",
     "joi": "^10.4.1",
-    "jquery": "^3.2.1",
-    "jquery-ui": "^1.12.1",
-    "jquery-validation": "^1.16.0",
     "jsonwebtoken": "^7.4.1",
     "koa": "^2.0.0-alpha.8",
     "koa-bodyparser": "^3.2.0",

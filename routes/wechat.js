@@ -7,7 +7,7 @@ import settings from '../config/settings'
 import middleware from '../app/wechat/middleware'
 let version = settings.server.version;
 import log4js from 'log4js'
-const logger = log4js.getLogger(__dirname)
+const logger = log4js.getLogger(`${__dirname}/${__filename}`)
 const router = Router({
   prefix: '/wechat'
 })
@@ -15,14 +15,14 @@ const router = Router({
 router.all('/sg',
   middleware.text(async function (message, ctx, next) {
     // TODO
-    logger.log(req.url)
-    logger.log("location", req.weixin)
+    logger.info(req.url)
+    logger.info("location", req.weixin)
     ctx.status = 200
     ctx.body = ""
   }).text(async function (message, ctx, next) {
     // TODO
-    logger.log(req.url)
-    logger.log("location", req.weixin)
+    logger.info(req.url)
+    logger.info("location", req.weixin)
     ctx.status = 200
     ctx.body = ""
   })

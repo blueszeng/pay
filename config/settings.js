@@ -1,16 +1,17 @@
 const server = {
 	ip: "",
-	port: 3000,
+	port: 4000,
 	gameType: "sg",
 	baseToken: "agarxhqb123pajloads4ga8xrunpagkjwlaw456xnpcagl29w4rxn",
 	version: 'v1',
-	payUrl: "http://127.0.0.1:8718/paynotify"//"http://120.76.182.17:8080/paynotify"
+	payUrl: "http://120.76.182.17:8080/paynotify"
+	//"http://120.76.182.17:8080/paynotify"
 }
 
 
 const db = {
 	"host": "localhost",
-	"database": "majiang"
+	"database": "rijinmajiang"
 }
 
 const redis = {

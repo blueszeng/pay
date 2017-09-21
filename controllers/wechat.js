@@ -1,9 +1,17 @@
+import fetch from 'node-fetch'
+import log4js from 'log4js'
+import xml2js from 'xml2js'
+import token from '../app/token'
 import { load } from '../utils/load'
 import settings from '../config/settings'
 import api from '../app/wechat/wechat'
-import fetch from 'node-fetch'
-import log4js from 'log4js'
-const logger = log4js.getLogger(__dirname)
+
+import ErrorCode from '../app/ErrorCode'
+
+const userManager = require("../app/userManager")
+const orderManager = require("../app/orderManager")
+
+const logger = log4js.getLogger(`${__dirname}/${__filename}`)
 let product = settings.product
 let nameCache = {}
 
@@ -18,16 +26,16 @@ const login = async (ctx, next) => {
         return Promise.reject({ code: ErrorCode.ParamError })
     }
     try {
-        let ret = await api.getUserIdByCode(code)        //通过code 获取用户 userid
+        let ret = await api.getUserIdByCodeAsync(code)        //通过code 获取用户 userid
         if (!ret.UserId) {
             await Promise.reject({ code: ErrorCode.LoginError })  // 主动throw 
         }
         let userid = ret.UserId
-        ret = await api.convertOpenid({ "userid": ret.UserId })  //转换openid
+        ret = await api.convertOpenidAsync({ "userid": ret.UserId })  //转换openid
         let openid = ret.openid
         let user = await userManager.FindUserByID(openid)
         if (!user) {
-            ret = await api.getUser(userid)
+            ret = await api.getUserAsync(userid)
             let phone = ret.mobile
             user = await userManager.createUser(openid, userid, phone)
         }
@@ -45,7 +53,7 @@ const login = async (ctx, next) => {
     } catch (err) {
         //无效token 自动获取
         if (err.code == 40014) {
-            await api.getAccessToken()
+            await api.getAccessTokenAsync()
         }
         logger.error(err)
         return Promise.reject({ code: ErrorCode.LoginError })
@@ -79,7 +87,7 @@ const order = async (ctx, next) => {
         let ret = { code: ErrorCode.OK, data: pkgs }
         return Promise.resolve(ret)
     } catch (err) {
-        logger.log(err)
+        logger.info(err)
         Promise.reject({ code: ErrorCode.OrderFailed })
     }
 }
