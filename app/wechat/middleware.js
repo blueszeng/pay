@@ -4,7 +4,7 @@ import settings from '../../config/settings'
 import { load } from '../../utils/load'
 import xml2js from 'xml2js'
 import Session from 'wechat-enterprise/lib/session'
-import List from 'wechat-enterprise/lib/List'
+import List from 'wechat-enterprise/lib/list'
 import bluebird from 'bluebird'
 // 转换成promise函数  Async 
 const config = settings.wechat

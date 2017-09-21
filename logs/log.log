@@ -183,3 +183,5 @@
   type: 'system',
   errno: 'ECONNRESET',
   code: 'ECONNRESET' }
+[2017-09-21 10:52:21.106] [INFO] /Users/zyg/optimization/pay//Users/zyg/optimization/pay/app.js - Listening on port 4000
+[2017-09-21 10:52:21.122] [INFO] /Users/zyg/optimization/pay/utils//Users/zyg/optimization/pay/utils/redis.js - connect redis success...
