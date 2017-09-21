@@ -26,8 +26,9 @@ const state = "6688"
  * @param {Object} ctx 
  * @param {Object} next 
  */
+// http://192.168.0.107:4000/api/wechat/dyh/v1/page
 const page = async (ctx, next) => {
-  let url = api.getAuthorizeURL('http://dlip.jdy518.com/pub/pay/dyh.html', state)
+  let url = api.getAuthorizeURL('http://101.132.96.27:4000/pub/pay/dyh.html', state)
   return ctx.redirect(url)
 }
 
