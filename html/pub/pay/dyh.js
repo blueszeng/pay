@@ -21,12 +21,12 @@ function SetHead(cards)
 var globe = {};
 var _v = 0;
 function callAPi(api, params, cb) {
-
+// http://101.132.96.27:4000/api/wechat/dyh/v1/page
     params = params || {}; 
     params["_v"] = _v;
     _v++;
     $.ajax({
-        url: "http://101.132.96.27:4000/api/wechat/dyh/v1/" + api,
+        url: "http://dlip.jdy518.com:5000/api/wechat/dyh/v1/" + api,
 
         // The name of the callback parameter, as specified by the YQL service
         jsonp: "callback",
@@ -81,7 +81,7 @@ function isWeiXin() {
     }
 }
 
-
+alert('1212'); 
 if(!isWeiXin())
 {
     clearPage();
@@ -89,6 +89,7 @@ if(!isWeiXin())
 else
 {
     var urlParams;
+    alert('121200000');
     (window.onpopstate = function() {
         var match,
             pl = /\+/g,
@@ -101,7 +102,10 @@ else
         while (match = search.exec(query))
             urlParams[decode(match[1])] = decode(match[2]);
     })();
-
+    
+    alert(JSON.stringify(urlParams));
+    
+    alert(urlParams.cod);
     if (urlParams.code) {
         callAPi("login", urlParams, function(ret) {
 
