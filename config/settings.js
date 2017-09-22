@@ -1,6 +1,6 @@
 const server = {
 	ip: "",
-	port: 4000,
+	port: 5000,
 	gameType: "sg",
 	baseToken: "agarxhqb123pajloads4ga8xrunpagkjwlaw456xnpcagl29w4rxn",
 	version: 'v1',
