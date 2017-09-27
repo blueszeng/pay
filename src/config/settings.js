@@ -4,7 +4,7 @@ const server = {
 	gameType: "sg",
 	baseToken: "agarxhqb123pajloads4ga8xrunpagkjwlaw456xnpcagl29w4rxn",
 	version: 'v1',
-	payUrl: "http://192.168.0.107:8718/paynotify"
+	payUrl: "http://101.132.96.27:8718/paynotify"
 	//"http://120.76.182.17:8080/paynotify"
 }
 
