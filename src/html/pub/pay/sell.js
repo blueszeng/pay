@@ -13,7 +13,6 @@ function clearPage() {
     $("body").html('<div class="alert alert-danger" role="alert"><strong>访问失败！请稍后再试</strong></div>');
 }
 
-
 function SetHead(cards)
 {
     $("#txt_top").html("欢迎！您的钻石剩余：" +cards);
@@ -21,18 +20,18 @@ function SetHead(cards)
 var globe = {};
 var _v = 0;
 function callAPi(api, params, cb) {
-// http://101.132.96.27:4000/api/wechat/dyh/v1/page
-    params = params || {}; 
+
+    params = params || {};
     params["_v"] = _v;
     _v++;
     $.ajax({
-        url: "http://dlip.jdy518.com:5000/api/wechat/dyh/v1/" + api,
+        url: "http://192.168.0.107/api/wechat/v1/" + api,
 
         // The name of the callback parameter, as specified by the YQL service
         jsonp: "callback",
 
         // Tell jQuery we're expecting JSONP
-        dataType: "jsonp",
+        // dataType: "jsonp",
 
         // Tell YQL what we want and that we want JSON
         data: params,
@@ -81,7 +80,7 @@ function isWeiXin() {
     }
 }
 
-alert('1212'); 
+
 if(!isWeiXin())
 {
     clearPage();
@@ -89,7 +88,6 @@ if(!isWeiXin())
 else
 {
     var urlParams;
-    alert('121200000');
     (window.onpopstate = function() {
         var match,
             pl = /\+/g,
@@ -102,28 +100,25 @@ else
         while (match = search.exec(query))
             urlParams[decode(match[1])] = decode(match[2]);
     })();
-    
-    alert(JSON.stringify(urlParams));
-    
-    alert(urlParams.cod);
+
+    //printf(urlParams)
     if (urlParams.code) {
         callAPi("login", urlParams, function(ret) {
-
             if (ret.code == 200) {
                 globe = ret;
+                SetHead(ret.cards);
                 InitAPI();
             } else {
                 clearPage();
             }
         });
     }
+    var passName = {
+
+    };
 
     function InitAPI() {
-        var item = [15, 30, 150];
-        var focus = 1;
-        var passName = {
 
-        };
         $("#playerid").blur(function(){
             var val = $("#playerid").val();
             if(val.length != 5)
@@ -136,30 +131,19 @@ else
                 id: globe.id,
                 key: globe.key
             }
-
             $("#txt_name").html("");
             callAPi("getusername", obj, function(ret){
                 if(ret.code == 200)
                 {
                     passName[val] = ret.name;
-                    $("#txt_name").html(ret.name);
+                     $("#txt_name").html(ret.name);
                 }
                 else{
                      $("#txt_name").html("无效的玩家ID");
                 }
             });
         });
-        function bind(id) {
-            var mysel = $("#item" + id);
-            mysel.click(function() {
-                $("#item" + focus).removeClass("active");
-                mysel.addClass("active");
-                focus = id;
-            })
-        }
-        for (var i = 1; i <= item.length; i++) {
-            bind(i);
-        }
+
         var lock = false;
         $("#charge").click(function() {
             var id = $("#playerid").val();
@@ -168,19 +152,26 @@ else
                 printf("等待验证或者无效玩家ID",true);
                 return;
             }
+            var num = $("#cards").val();
+            if(num<0||num>2000)
+            {
+                printf("额度超出范围",true);
+                return;
+            }
             var obj = {
                 uid: id,
-                pid: item[focus - 1],
+                num: num,
                 id: globe.id,
                 key: globe.key
             }
             $("#charge").attr("disabled",true); 
             lock = true;
-            callAPi("order", obj, function(ret) {
+            callAPi("sell", obj, function(ret) {
                 lock = false;
                 $("#charge").attr("disabled",false); 
                 if (ret.code == 200) {
-                    CallWXAPI(ret.data);
+                    SetHead(ret.cards);
+                    printf("充值成功");
                 } else {
                     printf("申请订单失败,请稍后再试!", true);
                 }

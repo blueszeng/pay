@@ -1,17 +1,17 @@
 const server = {
 	ip: "",
-	port: 5000,
+	port: 80,
 	gameType: "sg",
 	baseToken: "agarxhqb123pajloads4ga8xrunpagkjwlaw456xnpcagl29w4rxn",
 	version: 'v1',
-	payUrl: "http://120.76.182.17:8080/paynotify"
+	payUrl: "http://192.168.0.107:8718/paynotify"
 	//"http://120.76.182.17:8080/paynotify"
 }
 
 
 const db = {
 	"host": "localhost",
-	"database": "rijinmajiang"
+	"database": "majiang"
 }
 
 const redis = {
@@ -26,7 +26,7 @@ const wechat = {
 	appID: 'wxcf0528b62d7cd09e',
 	key: '89ecv2edcg69f6a2d062t5b4c03s024S',
 	mchID: '1430855702',
-	cb: "http://120.76.182.17/" + server.version + "/wxnotify",
+	cb: "http://120.76.182.17:8085/api/wechat/" + server.version + "/wxnotify",
 	agentid: 2
 }
 
@@ -38,13 +38,13 @@ const dyh = {
 	token: 'yJToEIfucCJOUIdLzSUUaf0zNL',
 	encodingAESKey: 'qCzYzi7fDdak4dk3wOluH4dy6EaysIYSGnDs2dBBgem',
 	secret: "be3e1771f937feed5b72bcc9a45f97f2",
-	cb: "http://120.76.182.17/dyh/" + server.version + "/wxnotify",
+	cb: "http://120.76.182.17:8085/api/wechat/dyh/" + server.version + "/wxnotify"
 }
 const dyhProduct = {
 	15: {
 		body: "充值5钻石",
 		attach: "充值",
-		fee: 1500,
+		fee: 1,
 		count: 5
 	},
 	30: {
@@ -64,7 +64,7 @@ const product = {
 	1: {
 		body: "充值",
 		attach: "充值",
-		fee: 12000,
+		fee: 1,
 		count: 100
 	},
 	200: {

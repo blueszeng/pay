@@ -102,18 +102,39 @@ const order = async (ctx, next) => {
 const wxnotify = async (ctx, next) => {
     let xml
     // load dowload xml file
-    try {
-        let buf = await load(ctx)
-        xml = buf.toString('utf-8')
-        if (!xml) {
-            let emptyErr = new Error('body is empty')
-            emptyErr.name = 'Wechat'
-            await Promise.reject(emptyErr)
-        }
-    } catch (err) {
-        logger.error(err)
-        return Promise.reject(err)
-    }
+    // try {
+    //     let buf = await load(ctx.req)
+    //     xml = buf.toString('utf-8')
+    //     if (!xml) {
+    //         let emptyErr = new Error('body is empty')
+    //         emptyErr.name = 'Wechat'
+    //         await Promise.reject(emptyErr)
+    //     }
+    // } catch (err) {
+    //     logger.error(err)
+    //     return Promise.reject(err)
+    // }
+
+    xml = `
+    <xml><appid><![CDATA[wxcf0528b62d7cd09e]]></appid>
+<attach><![CDATA[充值]]></attach>
+<bank_type><![CDATA[CFT]]></bank_type>
+<cash_fee><![CDATA[1]]></cash_fee>
+<fee_type><![CDATA[CNY]]></fee_type>
+<is_subscribe><![CDATA[Y]]></is_subscribe>
+<mch_id><![CDATA[1430855702]]></mch_id>
+<nonce_str><![CDATA[mrl9tjz7swu9qlw]]></nonce_str>
+<openid><![CDATA[odukqwu2PR36lHOT_Nthv5WLswZ0]]></openid>
+<out_trade_no><![CDATA[ruijin10000008]]></out_trade_no>
+<result_code><![CDATA[SUCCESS]]></result_code>
+<return_code><![CDATA[SUCCESS]]></return_code>
+<sign><![CDATA[F5555497442552E3BCB35D9A49298643]]></sign>
+<time_end><![CDATA[20170927151151]]></time_end>
+<total_fee>1</total_fee>
+<trade_type><![CDATA[JSAPI]]></trade_type>
+<transaction_id><![CDATA[4200000014201709274558215142]]></transaction_id>
+</xml>
+    `
 
     // parse xml and operator save data
     try {
@@ -121,7 +142,7 @@ const wxnotify = async (ctx, next) => {
         if (!result) {
             return Promise.reject(api.wxpay.Result(false))
         }
-        let xml = result.xml
+        xml = result.xml
         let obj = {}
         for (let src in xml) {
             obj[src] = xml[src][0]

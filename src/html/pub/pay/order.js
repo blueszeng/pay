@@ -13,6 +13,7 @@ function clearPage() {
     $("body").html('<div class="alert alert-danger" role="alert"><strong>访问失败！请稍后再试</strong></div>');
 }
 
+
 function SetHead(cards)
 {
     $("#txt_top").html("欢迎！您的钻石剩余：" +cards);
@@ -25,13 +26,14 @@ function callAPi(api, params, cb) {
     params["_v"] = _v;
     _v++;
     $.ajax({
-        url: "http://192.168.0.107:4000/api/wechat/v1/" + api,
+        
+        url: "http://192.168.0.107/api/wechat/v1/" + api,
 
         // The name of the callback parameter, as specified by the YQL service
-        jsonp: "callback",
+        // jsonp: "callback",
 
         // Tell jQuery we're expecting JSONP
-        dataType: "jsonp",
+        // dataType: "jsonp",
 
         // Tell YQL what we want and that we want JSON
         data: params,
@@ -113,65 +115,36 @@ else
             }
         });
     }
-    var passName = {
-
-    };
 
     function InitAPI() {
+        var item = [1, 200, 500, 1000, 2000];
+        var focus = 1;
 
-        $("#playerid").blur(function(){
-            var val = $("#playerid").val();
-            if(val.length != 5)
-            {
-                 $("#txt_name").html("无效的玩家ID");
-                 return;
-            }
-            var obj = {
-                uid: val,
-                id: globe.id,
-                key: globe.key
-            }
-            $("#txt_name").html("");
-            callAPi("getusername", obj, function(ret){
-                if(ret.code == 200)
-                {
-                    passName[val] = ret.name;
-                     $("#txt_name").html(ret.name);
-                }
-                else{
-                     $("#txt_name").html("无效的玩家ID");
-                }
-            });
-        });
-
+        function bind(id) {
+            var mysel = $("#item" + id);
+            mysel.click(function() {
+                $("#item" + focus).removeClass("active");
+                mysel.addClass("active");
+                focus = id;
+            })
+        }
+        for (var i = 1; i <= item.length; i++) {
+            bind(i);
+        }
         var lock = false;
         $("#charge").click(function() {
-            var id = $("#playerid").val();
-            if(passName[id] === undefined)
-            {
-                printf("等待验证或者无效玩家ID",true);
-                return;
-            }
-            var num = $("#cards").val();
-            if(num<0||num>2000)
-            {
-                printf("额度超出范围",true);
-                return;
-            }
             var obj = {
-                uid: id,
-                num: num,
+                pid: item[focus - 1],
                 id: globe.id,
                 key: globe.key
             }
             $("#charge").attr("disabled",true); 
             lock = true;
-            callAPi("sell", obj, function(ret) {
+            callAPi("order", obj, function(ret) {
                 lock = false;
                 $("#charge").attr("disabled",false); 
                 if (ret.code == 200) {
-                    SetHead(ret.cards);
-                    printf("充值成功");
+                    CallWXAPI(ret.data);
                 } else {
                     printf("申请订单失败,请稍后再试!", true);
                 }

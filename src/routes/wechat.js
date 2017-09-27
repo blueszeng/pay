@@ -30,11 +30,11 @@ router.all('/sg',
 
 
 //不需要token认证
-let check = { isCheck: true, isToken: false } // default false, false
+let check = { isCheck: false, isToken: false } // default false, false
 router.get(`/dyh/${version}/login`, wrapRoute(dyh.login, check))
 router.get(`/dyh/${version}/order`, wrapRoute(dyh.order, check))
 router.get(`/dyh/${version}/getusername`, wrapRoute(dyh.getusername, check))
-router.get(`/dyh/${version}/wxnotify`, wrapRoute(dyh.wxnotify))
+router.post(`/dyh/${version}/wxnotify`, wrapRoute(dyh.wxnotify))
 router.get(`/dyh/${version}/page`, dyh.page) //直接跳转不需要包装验证
 
 

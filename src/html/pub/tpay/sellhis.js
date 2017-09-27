@@ -25,13 +25,13 @@ function callAPi(api, params, cb) {
     params["_v"] = _v;
     _v++;
     $.ajax({
-        url: "http://192.168.0.107:4000/api/wechat/v1/" + api,
+        url: "http://192.168.0.107/api/wechat/v1/" + api,
 
         // The name of the callback parameter, as specified by the YQL service
-        jsonp: "callback",
+        // jsonp: "callback",
 
         // Tell jQuery we're expecting JSONP
-        dataType: "jsonp",
+        // dataType: "jsonp",
 
         // Tell YQL what we want and that we want JSON
         data: params,
@@ -81,11 +81,11 @@ function isWeiXin() {
 }
 
 
-// if(!isWeiXin())
-// {
-//     clearPage();
-// }
-// else
+if(!isWeiXin())
+{
+    clearPage();
+}
+else
 {
     var urlParams;
     (window.onpopstate = function() {
@@ -113,69 +113,91 @@ function isWeiXin() {
             }
         });
     }
-    var passName = {
+    Date.prototype.Format = function (fmt) { //author: meizz 
+        var o = {           
+    "M+" : this.getMonth()+1, //月份           
+    "d+" : this.getDate(), //日           
+    "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时           
+    "H+" : this.getHours(), //小时           
+    "m+" : this.getMinutes(), //分           
+    "s+" : this.getSeconds(), //秒           
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度           
+    "S" : this.getMilliseconds() //毫秒           
+    };  
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+} 
+    var maxpage = 1;
+    var curPage = 1;
+    function emptyTable()
+    {
+        $("#table td").remove();
+    }
+    function AddItem(item){
+        var newRow = "<tr>";
+        newRow += "<td>" +(""+item.id)+ "</td>";
+        newRow += "<td>" +item.pid+"("+item.name+")"+ "</td>";
+        newRow += "<td>" +item.count+ "</td>";
+        newRow += "<td>" +new Date(item.date).Format("yy/MM/dd HH:mm:ss");+ "</td>";
+        newRow+ "</tr>";
+        $("#table tr:last").after(newRow);
+    }
 
-    };
+    function AddListItem(val)
+    {
+       $("#page").append("<option>"+val+"</option>");
+    }
 
-    function InitAPI() {
-
-        $("#playerid").blur(function(){
-            var val = $("#playerid").val();
-            if(val.length != 5)
+    function solve( ret)
+    {
+        var max = Math.floor((ret.count + 9)/10);
+        if(max >maxpage)
+        {
+            for(var i=maxpage+1;i <= max; i++)
             {
-                 $("#txt_name").html("无效的玩家ID");
-                 return;
+                AddListItem(i);
             }
-            var obj = {
-                uid: val,
-                id: globe.id,
-                key: globe.key
+            maxpage=max;
+        }
+        emptyTable();
+        for(var i=0; i<ret.data.length; i++)
+        {
+            AddItem(ret.data[i]);
+        }
+        if(ret.count == 0)
+        {
+            $("#table tbody").html("未查询到订单！");
+        }
+    }
+    function CallData(pg){
+        var obj ={
+            id: globe.id,
+            key: globe.key,
+            page: Number(pg)-1
+        }
+        callAPi("sellhistory", obj, function(ret){
+            if(ret.code == 200)
+            {
+                //$("#table tbody").html(JSON.stringify(ret));
+                solve(ret);
             }
-            $("#txt_name").html("");
-            callAPi("getusername", obj, function(ret){
-                if(ret.code == 200)
-                {
-                    passName[val] = ret.name;
-                     $("#txt_name").html(ret.name);
-                }
-                else{
-                     $("#txt_name").html("无效的玩家ID");
-                }
-            });
+            else{
+                clearPage();
+            }
         });
-
-        var lock = false;
-        $("#charge").click(function() {
-            var id = $("#playerid").val();
-            if(passName[id] === undefined)
-            {
-                printf("等待验证或者无效玩家ID",true);
+        
+    }
+    function InitAPI()
+    {
+        $("#page").change(function(val){
+            var pg = $("#page").val();
+            if(pg == curPage)
                 return;
-            }
-            var num = $("#cards").val();
-            if(num<0||num>2000)
-            {
-                printf("额度超出范围",true);
-                return;
-            }
-            var obj = {
-                uid: id,
-                num: num,
-                id: globe.id,
-                key: globe.key
-            }
-            $("#charge").attr("disabled",true); 
-            lock = true;
-            callAPi("sell", obj, function(ret) {
-                lock = false;
-                $("#charge").attr("disabled",false); 
-                if (ret.code == 200) {
-                    SetHead(ret.cards);
-                    printf("充值成功");
-                } else {
-                    printf("申请订单失败,请稍后再试!", true);
-                }
-            });
+            curPage = pg;
+            CallData(pg);
         })
+        CallData(1);
     }
 }

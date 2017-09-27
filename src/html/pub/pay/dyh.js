@@ -13,6 +13,7 @@ function clearPage() {
     $("body").html('<div class="alert alert-danger" role="alert"><strong>访问失败！请稍后再试</strong></div>');
 }
 
+
 function SetHead(cards)
 {
     $("#txt_top").html("欢迎！您的钻石剩余：" +cards);
@@ -20,25 +21,25 @@ function SetHead(cards)
 var globe = {};
 var _v = 0;
 function callAPi(api, params, cb) {
-
-    params = params || {};
+// http://101.132.96.27:4000/api/wechat/dyh/v1/page
+    params = params || {}; 
     params["_v"] = _v;
     _v++;
     $.ajax({
-        url: "http://192.168.0.107:4000/api/wechat/v1/" + api,
+        url: "http://192.168.0.107/api/wechat/dyh/v1/" + api,
 
         // The name of the callback parameter, as specified by the YQL service
-        jsonp: "callback",
+        // jsonp: "callback",
 
         // Tell jQuery we're expecting JSONP
-        dataType: "jsonp",
+        // dataType: "jsonp",
 
         // Tell YQL what we want and that we want JSON
         data: params,
 
         // Work with the response
         success: function(response) {
-            //printf(JSON.stringify(response));
+            // alert(JSON.stringify(response));
             cb(response);
         }
     });
@@ -80,7 +81,6 @@ function isWeiXin() {
     }
 }
 
-
 if(!isWeiXin())
 {
     clearPage();
@@ -100,104 +100,88 @@ else
         while (match = search.exec(query))
             urlParams[decode(match[1])] = decode(match[2]);
     })();
-
-    //printf(urlParams)
+    //  alert(JSON.stringify(urlParams))
     if (urlParams.code) {
+        // alert(urlParams.code)
         callAPi("login", urlParams, function(ret) {
+            // alert(JSON.stringify(ret))
             if (ret.code == 200) {
                 globe = ret;
-                SetHead(ret.cards);
-                InitAPI();
+                // alert(globe)
+                InitAPI(globe);
             } else {
                 clearPage();
             }
         });
     }
-    Date.prototype.Format = function (fmt) { //author: meizz 
-        var o = {           
-    "M+" : this.getMonth()+1, //月份           
-    "d+" : this.getDate(), //日           
-    "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时           
-    "H+" : this.getHours(), //小时           
-    "m+" : this.getMinutes(), //分           
-    "s+" : this.getSeconds(), //秒           
-    "q+" : Math.floor((this.getMonth()+3)/3), //季度           
-    "S" : this.getMilliseconds() //毫秒           
-    };  
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-} 
-    var maxpage = 1;
-    var curPage = 1;
-    function emptyTable()
-    {
-        $("#table td").remove();
-    }
-    function AddItem(item){
-        var newRow = "<tr>";
-        newRow += "<td>" +(""+item.id)+ "</td>";
-        newRow += "<td>" +item.pid+"("+item.name+")"+ "</td>";
-        newRow += "<td>" +item.count+ "</td>";
-        newRow += "<td>" +new Date(item.date).Format("yy/MM/dd HH:mm:ss");+ "</td>";
-        newRow+ "</tr>";
-        $("#table tr:last").after(newRow);
-    }
 
-    function AddListItem(val)
-    {
-       $("#page").append("<option>"+val+"</option>");
-    }
+    function InitAPI() {
+        var item = [15, 30, 150];
+        var focus = 1;
+        var passName = {
 
-    function solve( ret)
-    {
-        var max = Math.floor((ret.count + 9)/10);
-        if(max >maxpage)
-        {
-            for(var i=maxpage+1;i <= max; i++)
+        };
+        $("#playerid").blur(function(){
+            var val = $("#playerid").val();
+            if(val.length != 5)
             {
-                AddListItem(i);
+                 $("#txt_name").html("无效的玩家ID");
+                 return;
             }
-            maxpage=max;
-        }
-        emptyTable();
-        for(var i=0; i<ret.data.length; i++)
-        {
-            AddItem(ret.data[i]);
-        }
-        if(ret.count == 0)
-        {
-            $("#table tbody").html("未查询到订单！");
-        }
-    }
-    function CallData(pg){
-        var obj ={
-            id: globe.id,
-            key: globe.key,
-            page: Number(pg)-1
-        }
-        callAPi("sellhistory", obj, function(ret){
-            if(ret.code == 200)
-            {
-                //$("#table tbody").html(JSON.stringify(ret));
-                solve(ret);
+            var obj = {
+                uid: val,
+                id: globe.id,
+                key: globe.key
             }
-            else{
-                clearPage();
-            }
+
+            $("#txt_name").html("");
+            callAPi("getusername", obj, function(ret){
+                if(ret.code == 200)
+                {
+                    passName[val] = ret.name;
+                    $("#txt_name").html(ret.name);
+                }
+                else{
+                     $("#txt_name").html("无效的玩家ID");
+                }
+            });
         });
-        
-    }
-    function InitAPI()
-    {
-        $("#page").change(function(val){
-            var pg = $("#page").val();
-            if(pg == curPage)
+        function bind(id) {
+            var mysel = $("#item" + id);
+            mysel.click(function() {
+                $("#item" + focus).removeClass("active");
+                mysel.addClass("active");
+                focus = id;
+            })
+        }
+        for (var i = 1; i <= item.length; i++) {
+            bind(i);
+        }
+        var lock = false;
+        $("#charge").click(function() {
+            var id = $("#playerid").val();
+            if(passName[id] === undefined)
+            {
+                printf("等待验证或者无效玩家ID",true);
                 return;
-            curPage = pg;
-            CallData(pg);
+            }
+            var obj = {
+                uid: id,
+                pid: item[focus - 1],
+                id: globe.id,
+                key: globe.key
+            }
+            $("#charge").attr("disabled",true); 
+            lock = true;
+            callAPi("order", obj, function(ret) {
+                lock = false;
+                $("#charge").attr("disabled",false); 
+                if (ret.code == 200) {
+                    CallWXAPI(ret.data);
+                } else {
+                    printf("申请订单失败,请稍后再试!", true);
+                }
+            });
         })
-        CallData(1);
     }
 }

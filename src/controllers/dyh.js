@@ -7,6 +7,8 @@ import dbMaster from '../app/dao/dbMaster'
 import token from '../app/token'
 import api from '../app/wechat/dyhwechat'
 import ErrorCode from '../app/ErrorCode'
+
+import { load, parseString } from '../utils/load'
 import fetch from 'node-fetch'
 import xml2js from 'xml2js'
 import log4js from 'log4js'
@@ -14,11 +16,12 @@ import log4js from 'log4js'
 //引处需要同步加载 初始化db 后才能加载 Schema
 // 因为 import加载是静态异步加载,  require为同步加载 
 dbMaster.Init(settings.db)  // init db
-const orderManager = require("../app/dyh_orderManger")
-const userManager = require("../app/userManager")
+const orderManager = require("../app/dyh_orderManger").default
+const userManager = require("../app/userManager").default
+let userCache = require('../app/userCache');
 let logger = log4js.getLogger(`${__dirname}/${__filename}`)
 
-
+let product = settings.dyhProduct
 
 const state = "6688"
 /**
@@ -27,11 +30,10 @@ const state = "6688"
  * @param {Object} next 
  */
 const page = async (ctx, next) => {
-  let url = api.getAuthorizeURL('http://dlip.jdy518.com:5000/pub/pay/dyh.html', state)
+  let url = api.getAuthorizeURL('http://dlip.jdy518.com/pub/pay/dyh.html', state)
   return ctx.redirect(url)
 }
 
-let userCache = {}
 let nameCache = {}
 
 //filter
@@ -59,6 +61,7 @@ const login = async (ctx, next) => {
       id: openid,
       key: key,
     }
+    logger.info('login', ret, userCache)
     return Promise.resolve(ret)
   } catch (err) {
     logger.error(err)
@@ -83,6 +86,7 @@ const getusername = async (ctx, next) => {
   }
   try {
     let ret = await userManager.FindInGameByID(uid)
+    console.log(ret)
     if (!ret) {
       return Promise.reject({ code: ErrorCode.UserNotExist })
     }
@@ -103,7 +107,9 @@ const getusername = async (ctx, next) => {
  * @param {Object} next 
  */
 const order = async (ctx, next) => {
-  let ip = req.connection.remoteAddress
+
+  let ip = ctx.req.connection.remoteAddress
+  console.log(ip)
   let str = "" + ip
   let arr = str.match(/((25[0-5]|2[0-4]\d|[01]?\d\d?)($|(?!\.$)\.)){4}/g)
   if (!arr || arr.length == 0) {
@@ -113,14 +119,16 @@ const order = async (ctx, next) => {
     str = arr[0]
   }
   ip = str
-  const { pid, uid } = ctx.request.query
+  const { pid, uid, id } = ctx.request.query
   if (!pid || !product[pid] || !uid || !nameCache[uid]) {
     return Promise.reject({ code: ErrorCode.ParamError })
   }
   let item = product[pid]
   try {
-    let order = await orderManager.CreateOrder(req.query.id, uid, item.fee, item.coun)
-    let pkgs = await api.wxpay.order(ip, item.attach, item.body, req.query.id, order.id, item.fee)
+    console.log(pid, uid, id)
+    let order = await orderManager.CreateOrder(id, uid, item.fee, item.count)
+    let orderId = `ruijin${order.id}`
+    let pkgs = await api.wxpay.order(ip, item.attach, item.body, id, orderId, item.fee)
     let ret = { code: ErrorCode.OK, data: pkgs }
     return Promise.resolve(ret)
   } catch (err) {
@@ -140,9 +148,28 @@ const order = async (ctx, next) => {
 const wxnotify = async (ctx, next) => {
   let xml
   // load dowload xml file
+  // console.log(load)
   try {
-    let buf = await load(ctx)
+    let buf = await load(ctx.req)
     xml = buf.toString('utf-8')
+//     xml = `<xml><appid><![CDATA[wxfe1105bf0e4beb05]]></appid>
+// <attach><![CDATA[充值]]></attach>
+// <bank_type><![CDATA[CFT]]></bank_type>
+// <cash_fee><![CDATA[1]]></cash_fee>
+// <fee_type><![CDATA[CNY]]></fee_type>
+// <is_subscribe><![CDATA[Y]]></is_subscribe>
+// <mch_id><![CDATA[1433459502]]></mch_id>
+// <nonce_str><![CDATA[qzsig9rnncendef]]></nonce_str>
+// <openid><![CDATA[owhU5wTjaXvop_zknhZYp_dNR3KM]]></openid>
+// <out_trade_no><![CDATA[ruijin860000056]]></out_trade_no>
+// <result_code><![CDATA[SUCCESS]]></result_code>
+// <return_code><![CDATA[SUCCESS]]></return_code>
+// <sign><![CDATA[BB4F94F63B9CF2B66D6334C73D1F6F4B]]></sign>
+// <time_end><![CDATA[20170926170330]]></time_end>
+// <total_fee>1</total_fee>
+// <trade_type><![CDATA[JSAPI]]></trade_type>
+// <transaction_id><![CDATA[4200000016201709264384488279]]></transaction_id>
+// </xml>`
     if (!xml) {
       let emptyErr = new Error('body is empty')
       emptyErr.name = 'Wechat'
@@ -155,24 +182,26 @@ const wxnotify = async (ctx, next) => {
 
   // parse xml and operator save data
   try {
-    let result = await xml2js.parseString(xml, { trim: true })
+    let result = await parseString(xml)
     if (!result) {
       return Promise.reject(api.wxpay.Result(false))
     }
-    let xml = result.xml
+    xml = result.xml
     let obj = {}
     for (let src in xml) {
       obj[src] = xml[src][0]
     }
     result = obj
+    console.log(result)
     if (result.return_code != "SUCCESS") {
       return await Promise.reject(api.wxpay.Result(false))
     }
     let passSign = api.wxpay.CheckSign(result)
+    console.log(passSign)
     if (!passSign) {
       return Promise.reject(api.wxpay.Result(false))
     }
-    let orderID = result.out_trade_no
+    let orderID = result.out_trade_no.replace(/ruijin/g, '')
     let order = await orderManager.GetOrderByID(orderID)
     if (!order) {
       return Promise.reject(api.wxpay.Result(false))
@@ -186,24 +215,15 @@ const wxnotify = async (ctx, next) => {
     order.status = 1
     let num = Number(order.count)
     let params = "?uid=" + order.userid + "&count=" + num
-    let data = await fetch(settings.server.payUrl + params).json()
+    let data = await fetch(settings.server.payUrl + params)
+    data = await data.json()
     if (data.code != 200) {
       logger.error("dyh request", data)
     }
     order.after = data.after
     order.wxid = result.transaction_id
-
-    let user = await userManager.FindUserByID(order.uid)
-    if (!user) {
-      // order.status = 0
-      return Promise.reject(api.wxpay.Result(false))
-    }
-    user.data.cards += order.count
-    order.after = user.data.cards
-    order.wxid = result.transaction_id
     await order.save()
     return Promise.resolve(api.wxpay.Result(true))
-
   } catch (err) {
     logger.error(err)
     return Promise.reject(api.wxpay.Result(false))

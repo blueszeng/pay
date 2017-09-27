@@ -13,7 +13,6 @@ function clearPage() {
     $("body").html('<div class="alert alert-danger" role="alert"><strong>访问失败！请稍后再试</strong></div>');
 }
 
-
 function SetHead(cards)
 {
     $("#txt_top").html("欢迎！您的钻石剩余：" +cards);
@@ -26,20 +25,20 @@ function callAPi(api, params, cb) {
     params["_v"] = _v;
     _v++;
     $.ajax({
-        url: "http://192.168.0.107:4000/api/wechat/v1/" + api,
+        url: "http://192.168.0.107/api/wechat/v1/" + api,
 
         // The name of the callback parameter, as specified by the YQL service
-        jsonp: "callback",
+        // jsonp: "callback",
 
         // Tell jQuery we're expecting JSONP
-        dataType: "jsonp",
+        // dataType: "jsonp",
 
         // Tell YQL what we want and that we want JSON
         data: params,
 
         // Work with the response
         success: function(response) {
-            //printf(JSON.stringify(response));
+            // alert(JSON.stringify(response));
             cb(response);
         }
     });
@@ -114,40 +113,94 @@ else
             }
         });
     }
+    Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+} 
+    var maxpage = 1;
+    var curPage = 1;
+    function emptyTable()
+    {
+        $("#table td").remove();
+    }
+    function AddItem(item){
+        var newRow = "<tr class='table-success'>";
+        if(item.status != 1)
+            newRow = "<tr class='table-danger'>";
+        newRow += "<td>" +item.id+ "</td>";
+        newRow += "<td>" +item.cost/100+ "</td>";
+        newRow += "<td>" +item.count+ "</td>";
+        newRow += "<td>" +(item.status==1?"交易成功":"交易失败")+ "</td>";
+         newRow += "<td>" +(item.wxid?item.wxid:"")+ "</td>";
+        newRow += "<td>" +new Date(item.date).Format("yy/MM/dd hh:mm:ss")+ "</td>";
+        newRow+ "</tr>";
+        $("#table tr:last").after(newRow);
+    }
 
-    function InitAPI() {
-        var item = [1, 200, 500, 1000, 2000];
-        var focus = 1;
+    function AddListItem(val)
+    {
+       $("#page").append("<option>"+val+"</option>");
+    }
 
-        function bind(id) {
-            var mysel = $("#item" + id);
-            mysel.click(function() {
-                $("#item" + focus).removeClass("active");
-                mysel.addClass("active");
-                focus = id;
-            })
-        }
-        for (var i = 1; i <= item.length; i++) {
-            bind(i);
-        }
-        var lock = false;
-        $("#charge").click(function() {
-            var obj = {
-                pid: item[focus - 1],
-                id: globe.id,
-                key: globe.key
+    function solve( ret)
+    {
+        var max = Math.floor((ret.count + 9)/10);
+        if(max >maxpage)
+        {
+            for(var i=maxpage+1;i <= max; i++)
+            {
+                AddListItem(i);
             }
-            $("#charge").addClass("disabled");
-            lock = true;
-            callAPi("order", obj, function(ret) {
-                lock = false;
-                $("#charge").removeClass("disabled");
-                if (ret.code == 200) {
-                    CallWXAPI(ret.data);
-                } else {
-                    printf("申请订单失败,请稍后再试!", true);
-                }
-            });
+            maxpage=max;
+        }
+        emptyTable();
+        for(var i=0; i<ret.data.length; i++)
+        {
+            AddItem(ret.data[i]);
+        }
+        if(ret.count == 0)
+        {
+            $("#table tbody").html("未查询到订单！");
+        }
+    }
+    function CallData(pg){
+        var obj ={
+            id: globe.id,
+            key: globe.key,
+            page: Number(pg)-1
+        }
+        callAPi("buyhistory", obj, function(ret){
+            if(ret.code == 200)
+            {
+                //$("#table tbody").html(JSON.stringify(ret));
+                solve(ret);
+            }
+            else{
+                clearPage();
+            }
+        });
+        
+    }
+    function InitAPI()
+    {
+        $("#page").change(function(val){
+            var pg = $("#page").val();
+            if(pg == curPage)
+                return;
+            curPage = pg;
+            CallData(pg);
         })
+        CallData(1);
     }
 }

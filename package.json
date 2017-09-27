@@ -29,7 +29,7 @@
     "koa-static": "^3.0.0",
     "log4js": "^1.1.0",
     "moment": "^2.18.1",
-    "mongoose": "^4.11.9",
+    "mongoose": "^4.6.0",
     "mongoose-auto-increment": "^5.0.1",
     "mysql": "^2.13.0",
     "node-fetch": "^2.0.0-alpha.8",
@@ -50,7 +50,8 @@
     "xml2js": "^0.4.17"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node ./app.js",
+    "start": "sudo nodemon --exec babel-node ./src/app.js",
+    "build": "gulp",
     "watch": "gulp watch",
     "e2e": "testcafe chrome ./e2es/test.js",
     "unit": "ava  ./tests/test --verbose"
@@ -82,6 +83,7 @@
     "eslint-plugin-standard": "^2.1.1",
     "fs-jetpack": "^0.13.3",
     "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
     "gulp-batch": "^1.0.5",
     "gulp-less": "^3.3.0",
     "gulp-rollup-mep": "^0.0.5",
