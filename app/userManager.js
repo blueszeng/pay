@@ -1,13 +1,13 @@
 import accountUser from './dao/accountUser'
 import UserModel from './dao/UserModel'
-var cacheUser = {
+let cacheUser = {
 
 }
 
 function AddItem(openid, data) {
 	if (cacheUser[openid])
 		return cacheUser[openid]
-	var item = {
+	let item = {
 		data: data
 	}
 	cacheUser[openid] = item
@@ -29,8 +29,8 @@ const FindUserByID = async (openid) => {
 	try {
 		let ret = await accountUser.findOne({ id: openid })
 		if (!!ret) {
-			var item = AddItem(openid, ret)
-			return Promise.resolve(ret)
+			let item = AddItem(openid, ret)
+			return Promise.resolve(item)
 		}
 		return Promise.resolve(null)
 	} catch (err) {
@@ -46,20 +46,20 @@ const FindUserByID = async (openid) => {
  * @param  {Function} cb     [description]
  * @return {[type]}          [description]
  */
-const createUser = async (openid, userid, phone, cb) => {
-	var user = new accountUser({
+const createUser = async (openid, userid, phone) => {
+	let user = new accountUser({
 		id: openid, userid, phone
 	})
 	try {
 		let ret = await user.save()
-		var item = AddItem(openid, ret)
+		let item = AddItem(openid, ret)
 		return Promise.resolve(ret)
 	} catch (err) {
 		return Promise.reject(err)
 	}
 }
 
-const FindInGameByID = async (id, cb) => {
+const FindInGameByID = async (id) => {
 	try {
 		let ret = await UserModel.findOne({ id: id })
 		if (!!ret) {
@@ -75,7 +75,7 @@ const FindInGameByPhone = async (id, cb) => {
 	try {
 		let ret = await accountUser.findOne({ phone: "" + id })
 		if (!!ret) {
-			var item = AddItem(openid, ret)
+			let item = AddItem(openid, ret)
 			return Promise.resolve(ret)
 		}
 		return Promise.resolve(null)

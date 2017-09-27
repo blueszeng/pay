@@ -1,6 +1,7 @@
 import settings from '../../config/settings'
 import wxpay from './wxpay'
 import bluebird from 'bluebird'
+import cache from '../../utils/redis'
 import log4js from 'log4js'
 const logger = log4js.getLogger(`${__dirname}/${__filename}`)
 //初始化订阅号
@@ -23,7 +24,7 @@ let api = new OAuth(settings.dyh.appID, settings.dyh.secret, function (openid, c
         .then(() => {
             return callback(null, token)
         }).catch((err) => {
-            logger.warn('向缓存中写入用户(openid: %s)微信OAuth Token错误: %s', openid, err)
+            logger.warn('向缓存中写入用户(openid: %s)微信OAuth Token错误: %s', openid, JSON.stringify(err))
             return callback(err)
         })
 })

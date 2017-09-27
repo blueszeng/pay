@@ -2,14 +2,14 @@ import fetch from 'node-fetch'
 import log4js from 'log4js'
 import xml2js from 'xml2js'
 import token from '../app/token'
-import { load } from '../utils/load'
+import { load, parseString } from '../utils/load'
 import settings from '../config/settings'
 import api from '../app/wechat/wechat'
 
 import ErrorCode from '../app/ErrorCode'
 
-const userManager = require("../app/userManager")
-const orderManager = require("../app/orderManager")
+const userManager = require("../app/userManager").default
+const orderManager = require("../app/orderManager").default
 
 const logger = log4js.getLogger(`${__dirname}/${__filename}`)
 let product = settings.product
@@ -22,7 +22,7 @@ let nameCache = {}
  */
 const login = async (ctx, next) => {
     const { code, state } = ctx.request.query
-    if (!code || !req.query.state) {
+    if (!code || !state) {
         return Promise.reject({ code: ErrorCode.ParamError })
     }
     try {
@@ -39,6 +39,7 @@ const login = async (ctx, next) => {
             let phone = ret.mobile
             user = await userManager.createUser(openid, userid, phone)
         }
+        console.log(user)
         user.data.login = Date.now()
         await user.data.save()
         user.token = token.create(settings.server.gameType, openid, Date.now(), settings.server.baseToken)
@@ -66,7 +67,7 @@ const login = async (ctx, next) => {
  * @param {Object} next 
  */
 const order = async (ctx, next) => {
-    let ip = ctx.connection.remoteAddress
+    let ip = ctx.req.connection.remoteAddress
     let str = "" + ip
     let arr = str.match(/((25[0-5]|2[0-4]\d|[01]?\d\d?)($|(?!\.$)\.)){4}/g)
     if (!arr || arr.length == 0) {
@@ -75,15 +76,16 @@ const order = async (ctx, next) => {
         str = arr[0]
     }
     ip = str
-    const { pid } = ctx.request.query
+    const { pid, id } = ctx.request.query
     if (!pid || !product[pid]) {
         return Promise.reject({ code: ErrorCode.ParamError })
     }
     let item = product[pid]
     let pkgs
     try {
-        let order = await orderManager.CreateOrder(req.query.id, item.fee, item.count)
-        pkgs = await api.wxpay.order(ip, item.attach, item.body, req.query.id, order.id, item.fee)
+        let order = await orderManager.CreateOrder(id, item.fee, item.count)
+        let orderId = `ruijin${order.id}`
+        pkgs = await api.wxpay.order(ip, item.attach, item.body, id, orderId, item.fee)
         let ret = { code: ErrorCode.OK, data: pkgs }
         return Promise.resolve(ret)
     } catch (err) {
@@ -115,7 +117,7 @@ const wxnotify = async (ctx, next) => {
 
     // parse xml and operator save data
     try {
-        let result = await xml2js.parseString(xml, { trim: true })
+        let result = await parseString(xml)
         if (!result) {
             return Promise.reject(api.wxpay.Result(false))
         }
@@ -132,7 +134,7 @@ const wxnotify = async (ctx, next) => {
         if (!passSign) {
             return Promise.reject(api.wxpay.Result(false))
         }
-        let orderID = result.out_trade_no
+        let orderID = result.out_trade_no.replace(/ruijin/g, '')
         let order = await orderManager.GetOrderByID(orderID)
         if (!order) {
             return Promise.reject(api.wxpay.Result(false))
@@ -146,7 +148,7 @@ const wxnotify = async (ctx, next) => {
         order.status = 1
         let user = await userManager.FindUserByID(order.uid)
         if (!user) {
-            // order.status = 0
+            order.status = 0
             return Promise.reject(api.wxpay.Result(false))
         }
         user.data.cards += order.count
@@ -169,6 +171,7 @@ const wxnotify = async (ctx, next) => {
  */
 const getusername = async (ctx, next) => {
     const { uid } = ctx.request.query
+    console.log('juuiiiid', uid)
     if (!uid) {
         return Promise.reject({ code: ErrorCode.ParamError })
     }
@@ -215,6 +218,7 @@ const getcard = async (ctx, next) => {
  * @param {Object} next 
  */
 const sell = async (ctx, next) => {
+    console.log('numb=================>er')
     const { id, uid } = ctx.request.query
     const num = Math.round(ctx.request.query.num)
     if (!uid || !nameCache[uid] || !num || num <= 0 || num >= 10000) {
@@ -228,7 +232,10 @@ const sell = async (ctx, next) => {
         }
         user.data.cards -= num
         let params = "?uid=" + uid + "&count=" + num
-        let data = await fetch(settings.server.payUrl + params).json()
+        console.log(settings.server.payUrl + params)
+        let data = await fetch(settings.server.payUrl + params)
+        console.log('23423423423434');
+        data = await data.json()
         if (data.code != 200) {
             myUser.data.cards += num
             return Promise.reject({ code: ErrorCode.SellFailed })
@@ -299,7 +306,7 @@ const buyhistory = async (ctx, next) => {
             }
         }
         let ret = { code: ErrorCode.OK, data: data, count: count }
-        console.log(err, ret)
+        console.log(ret)
         return Promise.resolve(ret)
 
     } catch (err) {

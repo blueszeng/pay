@@ -32,5 +32,4 @@ userSchema.plugin(autoIncrement.plugin, {
 });
 
 
-
 export default mongoose.model("user", userSchema);

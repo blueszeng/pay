@@ -1,8 +1,13 @@
-var frequency = {}
-
+import ErrorCode from '../app/ErrorCode'
+let userCache = require('../app/userCache')
+let userManager = require("../app/userManager").default
+let frequency = {}
+let requestVersion = {}
+const TimeBreak = 1000
 const wrapRoute = (fn, ...args) => {
   return async (ctx) => {
     function response(isPost, result) {
+      console.log('enter====> client', result, isPost)
       ctx.status = isPost ? 201 : 200
       ctx.body = result
     }
@@ -27,7 +32,8 @@ const wrapRoute = (fn, ...args) => {
           return response(isPost, err)
         }
       }
-      if (!req.query._v || requestVersion[id] != req.query._v) {
+      if (!ctx.request.query._v || requestVersion[id] != ctx.request.query._v) {
+        console.log('hooaaoaolaji')
         return response(isPost, { code: ErrorCode.WrongRequest, v: requestVersion[id] })
       }
       requestVersion[id]++;
@@ -36,11 +42,13 @@ const wrapRoute = (fn, ...args) => {
         return response(isPost, { code: ErrorCode.VisitTooMuch });
       }
       frequency[id] = now + TimeBreak;
-      if (userCache[id] != key) {
-        response(isPost, { code: ErrorCode.LoginFirst });
-        return;
+      if (!isToken) {
+        // console.log('hooaaoaolaji322222', userCache, key)
+        if (userCache[id] != key) {
+          response(isPost, { code: ErrorCode.LoginFirst });
+          return;
+        }
       }
-
       if (isToken) { // 是否需要Token验证
         var user = userManager.GetUserFast(id);
         if (!user) {
@@ -53,14 +61,14 @@ const wrapRoute = (fn, ...args) => {
         }
       }
     }
-     try {
-       console.log('enter===>')
-        const result = await fn.apply(ctx, [ctx, ...args])
-        return response(isPost, result)
-      } catch (err) {
-        console.log('enter===>22', err)
-        return response(isPost, err)
-      }
+    try {
+      console.log('enter===>')
+      const result = await fn.apply(ctx, [ctx, ...args])
+      return response(isPost, result)
+    } catch (err) {
+      console.log('enter===>22', err)
+      return response(isPost, err)
+    }
 
 
   }
