@@ -20,14 +20,16 @@ function createPay() {
             appid = wechat.appID
             logger.info(notify_url)
             fetch(wechat.cb, { method: 'POST', body: "<xml> <return_code>FAIL</return_code> </xml>" })
-            .then(res => {
-                logger.debug(res)
-            }).catch(err => {
-                logger.info(err)
-            })
-         },
+                .then(res => {
+                    // logger.debug(res)
+                }).catch(err => {
+                    logger.info(err)
+                })
+        },
         getXMLNodeValue: function (node_name, xml) {
+            console.log(xml)
             let tmp = xml.split("<" + node_name + ">")
+            console.log(tmp)
             let _tmp = tmp[1].split("</" + node_name + ">")
             return _tmp[0]
         },
@@ -113,15 +115,16 @@ function createPay() {
             formData += "<trade_type>JSAPI</trade_type>"
             formData += "<sign>" + this.paysignjsapi(appid, attach, body, mch_id, nonce_str, notify_url, openid, bookingNo, ip, total_fee, 'JSAPI') + "</sign>"
             formData += "</xml>"
-            //fs.writeFileSync("r.xml", formData)
             let self = this
             try {
-                let body = await fetch(url, { method: 'POST', body: formData }).json()
+                let body = await fetch(url, { method: 'POST', body: formData })
+                body = await body.text()
+                body = body.toString("utf-8");
                 let prepay_id = self.getXMLNodeValue('prepay_id', body.toString("utf-8"))
                 let tmp = prepay_id.split('[')
                 let tmp1 = tmp[2].split(']')
                 //签名
-                pkg = 'prepay_id=' + tmp1[0]
+                let pkg = 'prepay_id=' + tmp1[0]
                 let _paySignjs = self.paysignjs(appid, nonce_str, pkg, 'MD5', timeStamp)
                 let args = {
                     appId: appid,
@@ -133,22 +136,23 @@ function createPay() {
                 }
                 return Promise.resolve(args)
             } catch (err) {
-                 console.error(err, body)
-                 return Promise.reject({ err: err, body: body })
+                console.error(err, body)
+                return Promise.reject({ err: err, body: body })
             }
-         },
+        },
 
         //支付回调通知
         Result: function (success) {
             let output = ""
+            let reply
             if (success) {
-                let reply = {
+                reply = {
                     return_code: "SUCCESS",
                     return_msg: "OK"
                 }
 
             } else {
-                let reply = {
+                reply = {
                     return_code: "FAIL",
                     return_msg: "FAIL"
                 }
@@ -161,12 +165,12 @@ function createPay() {
         CheckSign: function (data) {
             let osign = data.sign
             delete data.sign
-
             let string = this.raw(data)
             string = string + '&key=' + key //key为在微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->密钥设置
             let crypto = require('crypto')
             let sign = crypto.createHash('md5').update(string, 'utf8').digest('hex')
             sign = sign.toUpperCase()
+            console.log(sign, osign)
             if (sign != osign)
                 return false
             return true
