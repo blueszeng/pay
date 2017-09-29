@@ -53,7 +53,7 @@ const createUser = async (openid, userid, phone) => {
 	try {
 		let ret = await user.save()
 		let item = AddItem(openid, ret)
-		return Promise.resolve(ret)
+		return Promise.resolve(item)
 	} catch (err) {
 		return Promise.reject(err)
 	}
@@ -76,7 +76,7 @@ const FindInGameByPhone = async (id, cb) => {
 		let ret = await accountUser.findOne({ phone: "" + id })
 		if (!!ret) {
 			let item = AddItem(openid, ret)
-			return Promise.resolve(ret)
+			return Promise.resolve(item)
 		}
 		return Promise.resolve(null)
 	} catch (err) {

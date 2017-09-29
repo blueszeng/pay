@@ -30,7 +30,8 @@ const state = "6688"
  * @param {Object} next 
  */
 const page = async (ctx, next) => {
-  let url = api.getAuthorizeURL('http://dlip.jdy518.com/pub/pay/dyh.html', state)
+  let url = api.getAuthorizeURL('http://dlip.jdy518.com/pub/pay/dyh.html?v=ruijin', state)
+  console.log(url)
   return ctx.redirect(url)
 }
 

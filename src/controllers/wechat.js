@@ -220,7 +220,7 @@ const getusername = async (ctx, next) => {
  */
 const getcard = async (ctx, next) => {
     try {
-        let user = await userManager.FindUserByID(req.query.id)
+        let user = await userManager.FindUserByID(ctx.request.query.id)
         if (!user) {
             return Promise.reject({ code: ErrorCode.ServerIsBusy })
         }

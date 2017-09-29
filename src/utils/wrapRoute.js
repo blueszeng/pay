@@ -33,17 +33,20 @@ const wrapRoute = (fn, ...args) => {
         }
       }
       if (!ctx.request.query._v || requestVersion[id] != ctx.request.query._v) {
-        console.log('hooaaoaolaji')
+        // console.log('hooaaoaolaji')
         return response(isPost, { code: ErrorCode.WrongRequest, v: requestVersion[id] })
       }
+      console.log(requestVersion[id])
+      
       requestVersion[id]++;
+      console.log(requestVersion[id])
+      
       var now = Date.now();
       if (!!frequency[id] && frequency[id] > now) {
         return response(isPost, { code: ErrorCode.VisitTooMuch });
       }
       frequency[id] = now + TimeBreak;
       if (!isToken) {
-        // console.log('hooaaoaolaji322222', userCache, key)
         if (userCache[id] != key) {
           response(isPost, { code: ErrorCode.LoginFirst });
           return;
@@ -66,7 +69,7 @@ const wrapRoute = (fn, ...args) => {
       const result = await fn.apply(ctx, [ctx, ...args])
       return response(isPost, result)
     } catch (err) {
-      console.log('enter===>22', err)
+      console.log('enter==errro=>', err)
       return response(isPost, err)
     }
 

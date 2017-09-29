@@ -22,7 +22,7 @@ const CreateOrder = async (openid, userid, fee, count, cb) => {
 	try {
 		let ret = await order.save()
 		let item = AddItem(ret.id, ret)
-		console.log(item)
+		// console.log(item)
 		
 		return Promise.resolve(item)
 	} catch (err) {

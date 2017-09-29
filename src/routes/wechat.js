@@ -30,7 +30,7 @@ router.all('/sg',
 
 
 //不需要token认证
-let check = { isCheck: false, isToken: false } // default false, false
+let check = { isCheck: true, isToken: false } // default false, false
 router.get(`/dyh/${version}/login`, wrapRoute(dyh.login, check))
 router.get(`/dyh/${version}/order`, wrapRoute(dyh.order, check))
 router.get(`/dyh/${version}/getusername`, wrapRoute(dyh.getusername, check))
