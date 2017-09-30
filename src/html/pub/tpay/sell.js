@@ -27,7 +27,7 @@ function callAPi(api, params, cb) {
     // printf(JSON.stringify(urlParams))
     // printf("http://120.76.182.17:8085:8085/api/wechat/v1/" + api)
     $.ajax({
-        url: "http://120.76.182.17:8085/api/wechat/v1/" + api,
+        url: "http://120.76.182.17:8086/api/wechat/v1/" + api,
 
         // The name of the callback parameter, as specified by the YQL service
         // jsonp: "callback",
