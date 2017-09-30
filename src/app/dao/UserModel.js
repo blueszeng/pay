@@ -24,12 +24,5 @@ let userSchema = new Schema({
   enable: { type: Boolean, default: true }
 });
 
-userSchema.plugin(autoIncrement.plugin, {
-    model: 'user',
-    field: 'id',
-    startAt: 10000,
-    incrementBy: 1
-});
-
 
 export default mongoose.model("user", userSchema);

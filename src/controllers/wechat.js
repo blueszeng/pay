@@ -242,6 +242,7 @@ const sell = async (ctx, next) => {
     console.log('numb=================>er')
     const { id, uid } = ctx.request.query
     const num = Math.round(ctx.request.query.num)
+    console.log(uid, nameCache[uid], num)
     if (!uid || !nameCache[uid] || !num || num <= 0 || num >= 10000) {
         return Promise.reject({ code: ErrorCode.ParamError })
     }

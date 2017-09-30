@@ -25,7 +25,7 @@ function callAPi(api, params, cb) {
     params["_v"] = _v;
     _v++;
     $.ajax({
-        url: "http://120.76.182.17:8086/api/wechat/v1/" + api,
+        url: "http://120.76.182.17:8621/api/wechat/v1/" + api,
 
         // The name of the callback parameter, as specified by the YQL service
         jsonp: "callback",
@@ -121,7 +121,7 @@ else
 
         $("#playerid").blur(function(){
             var val = $("#playerid").val();
-            if(val.length != 5)
+            if(val.length <= 5)
             {
                  $("#txt_name").html("无效的玩家ID");
                  return;
